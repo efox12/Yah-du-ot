@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Toolkit;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -30,18 +31,47 @@ class Menu extends JFrame {
 	private static Dimension screen = kit.getScreenSize();
 	private static final int MAX_HEIGHT = (int) (0.4 * screen.height);
 	private static final int MAX_WIDTH = (int) (0.4 * screen.width);
-	private static final Font STANDARD_FONT = new Font(Font.SANS_SERIF, Font.PLAIN, 40);
+	private static final Font STANDARD_FONT = new Font(Font.SANS_SERIF, Font.PLAIN, 50);
 	
 	public Menu(YahduotUX game) {
 		this.setSize(new Dimension(MAX_WIDTH, MAX_WIDTH));
+		this.setTitle("Yah-du-ot");
 		this.setLocation(((screen.width - MAX_WIDTH) / 2), ((screen.height - MAX_WIDTH) / 2));
+		BoxLayout menuLayout = new BoxLayout(getContentPane(), BoxLayout.Y_AXIS);
+		Dimension buttonSize = new Dimension(2 * MAX_WIDTH / 5, MAX_HEIGHT / 6);
 		
-		//this.setLayout(new BoxLayout());
+		getContentPane().setLayout(menuLayout);
+		JButton keep = new JButton("Keep Playing");
+		keep.setFont(STANDARD_FONT);
+		keep.setPreferredSize(buttonSize);
+		keep.setMaximumSize(buttonSize);
+		keep.setAlignmentX(CENTER_ALIGNMENT);
+		keep.setAlignmentY(CENTER_ALIGNMENT);
+		keep.addActionListener(event -> game.setVisible(true));
+		keep.addActionListener(event -> this.setVisible(false));
+		
 		JButton newGame = new JButton("New Game");
 		newGame.setFont(STANDARD_FONT);
-		newGame.addActionListener(event -> game.setVisible(true));
-		newGame.addActionListener(event -> this.setVisible(false));
-		getContentPane().add(newGame, BorderLayout.CENTER);
+		newGame.setPreferredSize(buttonSize);
+		newGame.setMaximumSize(buttonSize);
+		newGame.setAlignmentX(CENTER_ALIGNMENT);
+		newGame.setAlignmentY(CENTER_ALIGNMENT);
+		
+		JButton rules = new JButton("How to Play");
+		rules.setFont(STANDARD_FONT);
+		rules.setPreferredSize(buttonSize);
+		rules.setMaximumSize(buttonSize);
+		rules.setAlignmentX(CENTER_ALIGNMENT);
+		rules.setAlignmentY(CENTER_ALIGNMENT);
+		
+		getContentPane().add(Box.createVerticalGlue());
+		getContentPane().add(keep);
+		getContentPane().add(Box.createRigidArea(new Dimension(0, 50)));
+		getContentPane().add(newGame);
+		getContentPane().add(Box.createRigidArea(new Dimension(0, 50)));
+		getContentPane().add(rules);
+		getContentPane().add(Box.createVerticalGlue());
+
 		
 	}
 }
