@@ -68,6 +68,7 @@ public class Grouping {
 	public boolean isScored(){
 		return scored;
 	}
+	
 	public boolean isOpen(int space){
 		if(groupingList.get(space) == null)
 			return true;
