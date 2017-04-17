@@ -33,7 +33,7 @@ public class YahduotUX extends JFrame{
 		private final Dimension screen = kit.getScreenSize();
 		private final int MAX_HEIGHT = (int) (0.4 * screen.height);
 		private final int MAX_WIDTH = (int) (0.4 * screen.width);
-		private final Font STANDARD_FONT = new Font(Font.SANS_SERIF, Font.PLAIN, 50);
+		private final Font STANDARD_FONT = new Font(Font.SANS_SERIF, Font.PLAIN, MAX_WIDTH / 20);
 		
 		public Menu() {
 			this.setSize(new Dimension(MAX_WIDTH, MAX_WIDTH));
