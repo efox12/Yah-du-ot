@@ -21,7 +21,7 @@ public class YahduotUX extends JFrame{
 		this.setResizable(false);
 		this.setSize(new Dimension(GAME_WIDTH, GAME_HEIGHT));
 		this.setLocation(GAME_WIDTH / 6, GAME_HEIGHT / 6);
-		this.setIconImage(new ImageIcon("Icon.jpg").getImage());
+		this.setIconImage(new ImageIcon(this.getClass().getResource("Icon.jpg")).getImage());
 		
 		Menu mainMenu = new Menu();
     	mainMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -39,7 +39,7 @@ public class YahduotUX extends JFrame{
 			this.setSize(new Dimension(MAX_WIDTH, MAX_WIDTH));
 			this.setTitle("Yah-du-ot");
 			this.setLocation(((screen.width - MAX_WIDTH) / 2), ((screen.height - MAX_WIDTH) / 2));
-			this.setIconImage(new ImageIcon("Icon.jpg").getImage());
+			this.setIconImage(new ImageIcon(this.getClass().getResource("Icon.jpg")).getImage());
 			BoxLayout menuLayout = new BoxLayout(getContentPane(), BoxLayout.Y_AXIS);
 			Dimension buttonSize = new Dimension(2 * MAX_WIDTH / 5, MAX_HEIGHT / 6);
 			
