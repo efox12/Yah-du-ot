@@ -23,6 +23,21 @@ public class Grouping {
 		return valueOfAKind;
 	}
 	
+	public boolean isFullHouse(){
+		boolean fourOfAKind = false;
+		boolean fiveOfAKind = true;
+		for(int i = 1; i<=6; i++){
+			if(maxOfAKindFound(i) == 4)
+				fourOfAKind = true;
+			if(maxOfAKindFound(i) == 4)
+				fiveOfAKind = true;
+		}
+		if(fourOfAKind && fiveOfAKind)
+			return true;
+		else
+			return false;
+	}
+	
 	public int maxStraightFound(){
 		Collections.sort(groupingList);
 		int maxLength = 1;
@@ -41,28 +56,32 @@ public class Grouping {
 	public int score(){
 		scored = true;
 		int total = 0;
-		for(int i = 1; i<=6; i++){
-			if(maxOfAKindFound(i) == 3)
-				total =+ 20;
-			if(maxOfAKindFound(i) == 4)
-				total =+ 30;
-			if(maxOfAKindFound(i) == 5)
+		if(isFullHouse())
+			total += 60;
+		else{
+			for(int i = 1; i<=6; i++){
+				if(maxOfAKindFound(i) == 3)
+					total =+ 10;
+				if(maxOfAKindFound(i) == 4)
+					total =+ 20;
+				if(maxOfAKindFound(i) == 5)
+					total =+ 30;
+				if(maxOfAKindFound(i) == 6)
+					total =+ 40;
+				if(maxOfAKindFound(i) == 7)
+					total =+ 50;
+				if(maxOfAKindFound(i) == 8)
+					total =+ 60;
+				if(maxOfAKindFound(i) == 9)
+					total =+ 100;
+			}
+			if(maxStraightFound() == 6)
 				total =+ 40;
-			if(maxOfAKindFound(i) == 6)
-				total =+ 50;
-			if(maxOfAKindFound(i) == 7)
-				total =+ 60;
-			if(maxOfAKindFound(i) == 8)
-				total =+ 70;
-			if(maxOfAKindFound(i) == 9)
-				total =+ 100;
+			else if(maxStraightFound() == 5)
+				total =+ 30;
+			else if(maxStraightFound() == 4)
+				total =+ 20;
 		}
-		if(maxStraightFound() == 6)
-			total =+ 50;
-		else if(maxStraightFound() == 5)
-			total =+ 40;
-		else if(maxStraightFound() == 4)
-			total =+ 30;
 		return total;
 	}
 	
@@ -75,5 +94,9 @@ public class Grouping {
 			return true;
 		else
 			return false;
+	}
+	
+	public void addRoll(int value, int space){
+		groupingList.set(space, value);
 	}
 }
