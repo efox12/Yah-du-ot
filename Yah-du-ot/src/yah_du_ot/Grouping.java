@@ -6,6 +6,8 @@ import java.util.Dictionary;
 import javax.swing.JButton;
 import javax.swing.JToggleButton;
 
+import javafx.scene.shape.Line;
+
 public class Grouping {
 	ArrayList<Integer> groupingList = new ArrayList<Integer>();
 	boolean scored;
@@ -53,36 +55,36 @@ public class Grouping {
 		return maxLength;
 	}
 	
-	public int score(){
+	public ArrayList<enum> score(){
+		ArrayList<Line> possibleValues = new ArrayList<Line>();
 		scored = true;
-		int total = 0;
 		if(isFullHouse())
-			total += 60;
+			possibleValues.add(Line.FullHouse);
 		else{
 			for(int i = 1; i<=6; i++){
 				if(maxOfAKindFound(i) == 3)
-					total =+ 10;
+					possibleValues.add(Line.ThreeOK);
 				if(maxOfAKindFound(i) == 4)
-					total =+ 20;
+					possibleValues.add(Line.FourOK);
 				if(maxOfAKindFound(i) == 5)
-					total =+ 30;
+					possibleValues.add(Line.FiveOK);
 				if(maxOfAKindFound(i) == 6)
-					total =+ 40;
+					possibleValues.add(Line.SixOK);
 				if(maxOfAKindFound(i) == 7)
-					total =+ 50;
+					possibleValues.add(Line.SevenOK);
 				if(maxOfAKindFound(i) == 8)
-					total =+ 60;
+					possibleValues.add(Line.EightOK);
 				if(maxOfAKindFound(i) == 9)
-					total =+ 100;
+					possibleValues.add(Line.NineOK);
 			}
 			if(maxStraightFound() == 6)
-				total =+ 40;
+				possibleValues.add(Line.SStraight);
 			else if(maxStraightFound() == 5)
-				total =+ 30;
+				possibleValues.add(Line.LStraight);
 			else if(maxStraightFound() == 4)
-				total =+ 20;
+				possibleValues.add(Line.FStright);
 		}
-		return total;
+		return possibleValues;
 	}
 	
 	public boolean isScored(){
