@@ -60,30 +60,29 @@ public class Grouping {
 		scored = true;
 		if(isFullHouse())
 			possibleValues.add(Line.FullHouse);
-		else{
-			for(int i = 1; i<=6; i++){
-				if(maxOfAKindFound(i) == 3)
-					possibleValues.add(Line.ThreeOK);
-				if(maxOfAKindFound(i) == 4)
-					possibleValues.add(Line.FourOK);
-				if(maxOfAKindFound(i) == 5)
-					possibleValues.add(Line.FiveOK);
-				if(maxOfAKindFound(i) == 6)
-					possibleValues.add(Line.SixOK);
-				if(maxOfAKindFound(i) == 7)
-					possibleValues.add(Line.SevenOK);
-				if(maxOfAKindFound(i) == 8)
-					possibleValues.add(Line.EightOK);
-				if(maxOfAKindFound(i) == 9)
-					possibleValues.add(Line.NineOK);
-			}
-			if(maxStraightFound() == 6)
-				possibleValues.add(Line.SStraight);
-			else if(maxStraightFound() == 5)
-				possibleValues.add(Line.LStraight);
-			else if(maxStraightFound() == 4)
-				possibleValues.add(Line.FStright);
+		for(int i = 1; i<=6; i++){
+			if(maxOfAKindFound(i) == 3)
+				possibleValues.add(Line.ThreeOK);
+			if(maxOfAKindFound(i) == 4)
+				possibleValues.add(Line.FourOK);
+			if(maxOfAKindFound(i) == 5)
+				possibleValues.add(Line.FiveOK);
+			if(maxOfAKindFound(i) == 6)
+				possibleValues.add(Line.SixOK);
+			if(maxOfAKindFound(i) == 7)
+				possibleValues.add(Line.SevenOK);
+			if(maxOfAKindFound(i) == 8)
+				possibleValues.add(Line.EightOK);
+			if(maxOfAKindFound(i) == 9)
+				possibleValues.add(Line.NineOK);
 		}
+		if(maxStraightFound() == 6)
+			possibleValues.add(Line.SStraight);
+		else if(maxStraightFound() == 5)
+			possibleValues.add(Line.LStraight);
+		else if(maxStraightFound() == 4)
+			possibleValues.add(Line.FStright);
+			
 		return possibleValues;
 	}
 	
