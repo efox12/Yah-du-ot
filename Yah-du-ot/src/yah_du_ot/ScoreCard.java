@@ -49,16 +49,15 @@ public class ScoreCard {
 		String[] columnNames = {"Type", "Points worth", "Times scored"};
 		JTable table = new JTable(tableData, columnNames);
 		ScoreCardFrame scoreFrame = new ScoreCardFrame(table);
-		scoreFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		scoreFrame.setVisible(true);
 		return scoreFrame;
 	}
 	
 	class ScoreCardFrame extends JFrame{
 		
 		public ScoreCardFrame(JTable table){
-			this.setTitle("ScoreCard");
-			this.add(table);
+			setTitle("ScoreCard");
+			add(table);
+			setVisible(true);
 		}
 	}
 }

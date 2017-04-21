@@ -13,35 +13,51 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.geom.Rectangle2D;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
-public class YahduotUX extends JFrame{
+public class YahduotUX extends JFrame {
 	private static Toolkit kit = Toolkit.getDefaultToolkit();
 	private static final int GAME_HEIGHT = (int) (0.75 * kit.getScreenSize().height);
 	private static final int GAME_WIDTH = (int) (0.75 * kit.getScreenSize().width);
 	private static final double BOX_INSET_X = GAME_WIDTH * 0.02395;
-	private static final double BOX_INSET_Y = GAME_HEIGHT * 0.04784;
+	private static final double BOX_INSET_Y = GAME_HEIGHT * 0.04684;
 	private static final double BOX_WIDTH = GAME_WIDTH * 0.647;
 	private static final double BOX_HEIGHT = GAME_HEIGHT * 0.91;
 	
 	private final Font BOARD_FONT = new Font(Font.SANS_SERIF, Font.PLAIN, GAME_WIDTH / 30);
 	private static Drawing myDrawing;
+	private Container rollSpace;
+	private Die gameDie;
+	private JButton myDie = new JButton();
+	private ScoreCard player1;
+	private ScoreCard player2;
 	
-	public YahduotUX() {
+	public YahduotUX(Die thisDie, ScoreCard Player1, ScoreCard Player2) {
 		this.setTitle("Yah-du-ot");
 		this.setResizable(false);
 		this.setSize(new Dimension(GAME_WIDTH, GAME_HEIGHT));
 		this.setLocation(GAME_WIDTH / 6, GAME_HEIGHT / 6);
 		this.setIconImage(new ImageIcon(this.getClass().getResource("Icon.jpg")).getImage());
+		this.player1 = Player1;
+		this.player2 = Player2;
+		
+		gameDie = thisDie;
+		myDie.addActionListener(event -> updateDieButton());
+		myDie.addActionListener(event -> revalidate());
+		myDie.addActionListener(event -> gameDie.roll());
 		
 		getContentPane().setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -57,9 +73,11 @@ public class YahduotUX extends JFrame{
 		
 		JButton P1Score = new JButton("Score");
 		P1Score.setFont(BOARD_FONT);
+		P1Score.addActionListener(event -> displayScore(player1));
 		
 		JButton P2Score = new JButton("Score");
 		P2Score.setFont(BOARD_FONT);
+		P2Score.addActionListener(event -> displayScore(player2));
 		
 		JButton filler = new JButton("Filler");
 		filler.setFont(BOARD_FONT);
@@ -67,14 +85,7 @@ public class YahduotUX extends JFrame{
 		Container playerInfo = new Container();
 		playerInfo.setLayout(new GridBagLayout());
 		
-		Container roll = new Container();
-		BoxLayout rollLayout = new BoxLayout(roll, BoxLayout.Y_AXIS);
-		roll.setLayout(rollLayout);
-		
-		JLabel turn = new JLabel("First turn not decided");
-		turn.setFont(BOARD_FONT);
-		turn.setAlignmentX(CENTER_ALIGNMENT);
-		roll.add(turn);
+		createRoll(thisDie);
 		
 		c.weighty = 1.0;
 		c.weightx = 1.0;
@@ -101,11 +112,6 @@ public class YahduotUX extends JFrame{
 		c.gridwidth = 1;
 		playerInfo.add(P2Score, c);
 		
-		c.gridx = 3;
-		c.gridy = 0;
-		c.gridheight = 3;
-		playerInfo.add(new JLabel(), c);
-			
 		c.fill = GridBagConstraints.BOTH;
 		c.gridx = 2;
 		c.gridy = 1;
@@ -117,7 +123,7 @@ public class YahduotUX extends JFrame{
 		getContentPane().add(playerInfo, c);
 		
 		c.gridy = 2;
-		getContentPane().add(roll, c);
+		getContentPane().add(rollSpace, c);
 		
 		c.gridy = 0;
 		c.gridx = 1;
@@ -151,6 +157,15 @@ public class YahduotUX extends JFrame{
     	myDrawing.setVisible(true);
 	}	
 	
+	private void displayScore(ScoreCard player) {
+		JFrame card = player.displayCard();
+		card.setVisible(true);
+	}
+
+	private void updateDieButton() {
+		myDie.setIcon(new ImageIcon(getDieImage().getImage().getScaledInstance(GAME_WIDTH / 8, GAME_WIDTH / 8, Image.SCALE_DEFAULT)));
+	}
+
 	private Container createColumnLabels() {
 		Container columns = new Container();
 		columns.setLayout(new GridLayout(1, 9));
@@ -193,14 +208,57 @@ public class YahduotUX extends JFrame{
 				String label = Character.toString((char) (i + 65)) + (j + 1) + "";
 				buttonBox[i][j] = new JButton(label);
 				buttonBox[i][j].setFont(BOARD_FONT);
-				buttonBox[i][j].setForeground(Color.RED);
+				buttonBox[i][j].setForeground(Color.GRAY);
 				buttonBox[i][j].addActionListener(event ->
-													System.out.println(label));
+													System.out.println(label + " pressed"));
 				buttons.add(buttonBox[i][j]);
 			}
 		}
 		
 		return buttons;
+	}
+	
+	private void createRoll(Die thisDie) {
+		rollSpace = new Container();
+		BoxLayout rollLayout = new BoxLayout(rollSpace, BoxLayout.PAGE_AXIS);
+		rollSpace.setLayout(rollLayout);
+		
+		JLabel turn = new JLabel("First turn not decided");
+		turn.setFont(BOARD_FONT);
+		turn.setAlignmentX(CENTER_ALIGNMENT);
+		rollSpace.add(Box.createRigidArea(new Dimension(0, 200)));
+		rollSpace.add(turn);
+		rollSpace.add(Box.createRigidArea(new Dimension(0, 200)));
+		updateDieButton();
+		
+		myDie.setIcon(new ImageIcon(getDieImage().getImage().getScaledInstance(GAME_WIDTH / 8, GAME_WIDTH / 8, Image.SCALE_DEFAULT)));
+		myDie.setAlignmentX(Component.CENTER_ALIGNMENT);
+		rollSpace.add(myDie);
+		revalidate();
+	}
+
+	
+	private ImageIcon getDieImage() {
+		ImageIcon diePic;
+		
+		switch (gameDie.getLastRoll()) {
+		case 1: diePic = new ImageIcon(this.getClass().getResource("Die 1.jpg"));
+				break;
+		case 2: diePic = new ImageIcon(this.getClass().getResource("Die 2.jpg"));
+				break;
+		case 3: diePic = new ImageIcon(this.getClass().getResource("Die 3.jpg"));
+				break;
+		case 4: diePic = new ImageIcon(this.getClass().getResource("Die 4.jpg"));
+				break;
+		case 5: diePic = new ImageIcon(this.getClass().getResource("Die 5.jpg"));
+				break;
+		case 6: diePic = new ImageIcon(this.getClass().getResource("Die 6.jpg"));
+				break;
+		default: diePic = new ImageIcon(this.getClass().getResource("Die 0.jpg"));
+				break;
+		}
+		
+		return diePic;
 	}
 	
 	class Drawing extends JPanel {
@@ -291,5 +349,6 @@ public class YahduotUX extends JFrame{
 		    g.drawImage(bg, -70, -100, this);
 		  }
 	}
+
 }
 
