@@ -28,6 +28,11 @@ public class YahduotUX extends JFrame{
 	private static Toolkit kit = Toolkit.getDefaultToolkit();
 	private static final int GAME_HEIGHT = (int) (0.75 * kit.getScreenSize().height);
 	private static final int GAME_WIDTH = (int) (0.75 * kit.getScreenSize().width);
+	private static final double BOX_INSET_X = GAME_WIDTH * 0.02395;
+	private static final double BOX_INSET_Y = GAME_HEIGHT * 0.04784;
+	private static final double BOX_WIDTH = GAME_WIDTH * 0.647;
+	private static final double BOX_HEIGHT = GAME_HEIGHT * 0.91;
+	
 	private final Font BOARD_FONT = new Font(Font.SANS_SERIF, Font.PLAIN, GAME_WIDTH / 30);
 	private static Drawing myDrawing;
 	
@@ -100,9 +105,7 @@ public class YahduotUX extends JFrame{
 		c.gridy = 0;
 		c.gridheight = 3;
 		playerInfo.add(new JLabel(), c);
-		
-		
-		
+			
 		c.fill = GridBagConstraints.BOTH;
 		c.gridx = 2;
 		c.gridy = 1;
@@ -135,12 +138,12 @@ public class YahduotUX extends JFrame{
 		c.weighty = 1.0;
 		getContentPane().add(createButtonMap(), c);
 		
-		
 		/*
 		Menu mainMenu = new Menu();
     	mainMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     	mainMenu.setVisible(true);
     	*/
+    	
     	this.setVisible(true);
     	myDrawing = new Drawing();
     	setGlassPane(myDrawing);
@@ -209,10 +212,14 @@ public class YahduotUX extends JFrame{
 		
 		protected void paintComponent(Graphics g) {
 			Graphics2D g2 = (Graphics2D) g;
-			Rectangle2D box = new Rectangle2D.Double(GAME_WIDTH * 0.02395, GAME_HEIGHT * 0.04784, GAME_WIDTH * 0.647, GAME_HEIGHT * 0.91);
+			Rectangle2D box = new Rectangle2D.Double(BOX_INSET_X, BOX_INSET_Y, BOX_WIDTH, BOX_HEIGHT);
+			Rectangle2D horizontal = new Rectangle2D.Double(BOX_INSET_X, BOX_INSET_Y + (BOX_HEIGHT / 3), BOX_WIDTH, BOX_HEIGHT / 3);
+			Rectangle2D vertical = new Rectangle2D.Double(BOX_INSET_X + (BOX_WIDTH / 3), BOX_INSET_Y, BOX_WIDTH / 3, BOX_HEIGHT);
 			g2.setStroke(new BasicStroke(5));
 			//g2.fillRect(10, 10, 100, 100);
 			g2.draw(box);
+			g2.draw(horizontal);
+			g2.draw(vertical);
 		}
 		
 		
