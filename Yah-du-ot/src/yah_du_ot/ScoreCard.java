@@ -32,6 +32,7 @@ public class ScoreCard {
 	}
 	
 	public JFrame displayCard(){
+		//Object[][] tableData = new Object[students.keySet().size()][numberOfColumns];
 		ScoreCardFrame scoreFrame = new ScoreCardFrame();
 		scoreFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		scoreFrame.setVisible(true);
