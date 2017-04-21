@@ -31,21 +31,17 @@ public class ScoreCard {
 		lineTallies.put(lineEnum, numberOfTallies);
 	}
 	
-	/*
 	public JFrame displayCard(){
-		return new ScoreCardFrame();
+		ScoreCardFrame scoreFrame = new ScoreCardFrame();
+		scoreFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		scoreFrame.setVisible(true);
+		return scoreFrame;
 	}
 	
 	class ScoreCardFrame extends JFrame{
-		private final Dimension screen = kit.getScreenSize();
-		private final int MAX_HEIGHT = (int) (0.4 * screen.height);
-		private final int MAX_WIDTH = (int) (0.4 * screen.width);
-		private final Font STANDARD_FONT = new Font(Font.SANS_SERIF, Font.PLAIN, MAX_WIDTH / 20);
 		
 		public ScoreCardFrame(){
-			this.setSize(new Dimension(MAX_WIDTH, MAX_WIDTH));
 			this.setTitle("ScoreCard");
-			this.setLocation(((screen.width - MAX_WIDTH) / 2), ((screen.height - MAX_WIDTH) / 2));
 		}
-	}*/
+	}
 }
