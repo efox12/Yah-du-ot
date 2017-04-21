@@ -10,4 +10,6 @@ public class GameBoard {
 		columns = new Grouping[9];
 		clusters = new Grouping[9];
 	}
+	
+	
 }

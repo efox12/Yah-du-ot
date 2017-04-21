@@ -6,7 +6,6 @@ import java.util.Dictionary;
 import javax.swing.JButton;
 import javax.swing.JToggleButton;
 
-import javafx.scene.shape.Line;
 
 public class Grouping {
 	ArrayList<Integer> groupingList = new ArrayList<Integer>();
@@ -55,7 +54,7 @@ public class Grouping {
 		return maxLength;
 	}
 	
-	public ArrayList<enum> score(){
+	public ArrayList<Line> score(){
 		ArrayList<Line> possibleValues = new ArrayList<Line>();
 		scored = true;
 		if(isFullHouse())
@@ -81,7 +80,7 @@ public class Grouping {
 		else if(maxStraightFound() == 5)
 			possibleValues.add(Line.LStraight);
 		else if(maxStraightFound() == 4)
-			possibleValues.add(Line.FStright);
+			possibleValues.add(Line.FStraight);
 			
 		return possibleValues;
 	}
