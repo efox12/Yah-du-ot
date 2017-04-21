@@ -1,13 +1,15 @@
 package yah_du_ot;
 
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -20,6 +22,7 @@ public class YahduotUX extends JFrame{
 	private static Toolkit kit = Toolkit.getDefaultToolkit();
 	private static final int GAME_HEIGHT = (int) (0.75 * kit.getScreenSize().height);
 	private static final int GAME_WIDTH = (int) (0.75 * kit.getScreenSize().width);
+	private final Font BOARD_FONT = new Font(Font.SANS_SERIF, Font.PLAIN, GAME_WIDTH / 30);
 	
 	public YahduotUX() {
 		this.setTitle("Yah-du-ot");
@@ -28,17 +31,106 @@ public class YahduotUX extends JFrame{
 		this.setLocation(GAME_WIDTH / 6, GAME_HEIGHT / 6);
 		this.setIconImage(new ImageIcon(this.getClass().getResource("Icon.jpg")).getImage());
 		
+		getContentPane().setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		
+		JLabel Players = new JLabel("Players");
+		Players.setFont(BOARD_FONT);
+		
+		JLabel P1 = new JLabel("Player 1: 0");
+		P1.setFont(BOARD_FONT);
+		
+		JLabel P2 = new JLabel("Player 2: 0");
+		P2.setFont(BOARD_FONT);
+		
+		JButton P1Score = new JButton("Score");
+		P1Score.setFont(BOARD_FONT);
+		
+		JButton P2Score = new JButton("Score");
+		P2Score.setFont(BOARD_FONT);
+		
+		JButton filler = new JButton("Filler");
+		filler.setFont(BOARD_FONT);
+		
+		Container playerInfo = new Container();
+		playerInfo.setLayout(new GridBagLayout());
+		
+		Container roll = new Container();
+		BoxLayout rollLayout = new BoxLayout(roll, BoxLayout.Y_AXIS);
+		roll.setLayout(rollLayout);
+		
+		JLabel turn = new JLabel("First turn not decided");
+		turn.setFont(BOARD_FONT);
+		turn.setAlignmentX(CENTER_ALIGNMENT);
+		roll.add(turn);
+		
+		c.weighty = 1.0;
+		c.weightx = 1.0;
+		c.gridx = 1;
+		c.gridy = 0;
+		c.gridwidth = 2;
+		playerInfo.add(Players, c);
+		
+		c.gridx = 0;
+		c.gridy = 1;
+		c.gridwidth = 2;
+		playerInfo.add(P1, c);
+		
+		c.gridx = 2;
+		c.gridwidth = 1;
+		playerInfo.add(P1Score, c);
+		
+		c.gridx = 0;
+		c.gridy = 2;
+		c.gridwidth = 2;
+		playerInfo.add(P2, c);
+		
+		c.gridx = 2;
+		c.gridwidth = 1;
+		playerInfo.add(P2Score, c);
+		
+		c.gridx = 3;
+		c.gridy = 0;
+		c.gridheight = 3;
+		playerInfo.add(new JLabel(), c);
+		
+		
+		
+		c.fill = GridBagConstraints.BOTH;
+		c.gridx = 2;
+		c.gridy = 0;
+		c.gridheight = 1;
+		c.weighty = 0.1;
+		c.weightx = 0.1;
+		playerInfo.validate();
+		getContentPane().add(playerInfo, c);
+		
+		c.gridy = 1;
+		getContentPane().add(roll, c);
+		
+		c.gridx = 0;
+		c.gridy = 0;
+		c.gridwidth = 0;
+		c.gridheight = 2;
+		c.gridwidth = 2;
+		c.weightx = 0.3;
+		c.weighty = 1.0;
+		getContentPane().add(filler, c);
+		
+		
+		/*
 		Menu mainMenu = new Menu();
     	mainMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     	mainMenu.setVisible(true);
-    	this.setVisible(false);
+    	*/
+    	this.setVisible(true);
 	}	
 	
 	class Menu extends JFrame {
 		private final Dimension screen = kit.getScreenSize();
 		private final int MAX_HEIGHT = (int) (0.4 * screen.height);
 		private final int MAX_WIDTH = (int) (0.4 * screen.width);
-		private final Font STANDARD_FONT = new Font(Font.SANS_SERIF, Font.PLAIN, MAX_WIDTH / 20);
+		private final Font MENU_FONT = new Font(Font.SANS_SERIF, Font.PLAIN, MAX_WIDTH / 20);
 		
 		public Menu() {
 			this.setSize(new Dimension(MAX_WIDTH, MAX_WIDTH));
@@ -55,7 +147,7 @@ public class YahduotUX extends JFrame{
 			
 			getContentPane().setLayout(menuLayout);
 			JButton keep = new JButton("Keep Playing");
-			keep.setFont(STANDARD_FONT);
+			keep.setFont(MENU_FONT);
 			keep.setPreferredSize(buttonSize);
 			keep.setMaximumSize(buttonSize);
 			keep.setAlignmentX(CENTER_ALIGNMENT);
@@ -64,14 +156,14 @@ public class YahduotUX extends JFrame{
 			keep.addActionListener(event -> this.setVisible(false));
 			
 			JButton newGame = new JButton("New Game");
-			newGame.setFont(STANDARD_FONT);
+			newGame.setFont(MENU_FONT);
 			newGame.setPreferredSize(buttonSize);
 			newGame.setMaximumSize(buttonSize);
 			newGame.setAlignmentX(CENTER_ALIGNMENT);
 			newGame.setAlignmentY(CENTER_ALIGNMENT);
 			
 			JButton rules = new JButton("How to Play");
-			rules.setFont(STANDARD_FONT);
+			rules.setFont(MENU_FONT);
 			rules.setPreferredSize(buttonSize);
 			rules.setMaximumSize(buttonSize);
 			rules.setAlignmentX(CENTER_ALIGNMENT);
