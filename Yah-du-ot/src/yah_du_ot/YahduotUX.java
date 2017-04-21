@@ -2,14 +2,19 @@ package yah_du_ot;
 
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 public class YahduotUX extends JFrame{
 	private static Toolkit kit = Toolkit.getDefaultToolkit();
@@ -40,6 +45,11 @@ public class YahduotUX extends JFrame{
 			this.setTitle("Yah-du-ot");
 			this.setLocation(((screen.width - MAX_WIDTH) / 2), ((screen.height - MAX_WIDTH) / 2));
 			this.setIconImage(new ImageIcon(this.getClass().getResource("Icon.jpg")).getImage());
+			this.setResizable(false);
+			Background bg = new Background();
+			setContentPane(bg);
+			
+			
 			BoxLayout menuLayout = new BoxLayout(getContentPane(), BoxLayout.Y_AXIS);
 			Dimension buttonSize = new Dimension(2 * MAX_WIDTH / 5, MAX_HEIGHT / 6);
 			
@@ -73,8 +83,22 @@ public class YahduotUX extends JFrame{
 			getContentPane().add(newGame);
 			getContentPane().add(Box.createRigidArea(new Dimension(0, 50)));
 			getContentPane().add(rules);
-			getContentPane().add(Box.createVerticalGlue());			
+			getContentPane().add(Box.createVerticalGlue());	
+			//getContentPane().setOpaque()
 		}
 	}
+	
+	class Background extends JPanel {
+		  private Image bg;
+
+		  public Background() {
+		    bg = new ImageIcon(this.getClass().getResource("bg.jpg")).getImage();
+		  }
+
+		  public void paintComponent(Graphics g) {
+			super.paintComponent(g);
+		    g.drawImage(bg, -70, -100, this);
+		  }
+		}
 }
 
