@@ -33,19 +33,18 @@ public class ScoreCard {
 	}
 	
 	public JFrame displayCard(){
-		//if this won't display the enums, then change so it is strings
 		Object[][] tableData = {
-				{Line.FullHouse,"25 Points", lineTallies.get(Line.FullHouse)},
-				{Line.ThreeOK, "10 Points", lineTallies.get(Line.ThreeOK)},
-				{Line.FourOK, "20 Points", lineTallies.get(Line.FourOK)},
-				{Line.FiveOK, "30 Points", lineTallies.get(Line.FiveOK)},
-				{Line.SixOK, "40 Points", lineTallies.get(Line.SixOK)},
-				{Line.SevenOK, "50 Points", lineTallies.get(Line.SevenOK)},
-				{Line.EightOK, "60 Points", lineTallies.get(Line.EightOK)},
-				{Line.NineOK, "100 Points", lineTallies.get(Line.NineOK)},
-				{Line.SStraight, "20 Points", lineTallies.get(Line.SStraight)},
-				{Line.LStraight, "30 Points", lineTallies.get(Line.LStraight)},
-				{Line.FStraight, "40 Points", lineTallies.get(Line.FStraight)},
+				{"FullHouse","25 Points", lineTallies.get(Line.FullHouse)},
+				{"ThreeOK", "10 Points", lineTallies.get(Line.ThreeOK)},
+				{"FourOK", "20 Points", lineTallies.get(Line.FourOK)},
+				{"FiveOK", "30 Points", lineTallies.get(Line.FiveOK)},
+				{"SixOK", "40 Points", lineTallies.get(Line.SixOK)},
+				{"SevenOK", "50 Points", lineTallies.get(Line.SevenOK)},
+				{"EightOK", "60 Points", lineTallies.get(Line.EightOK)},
+				{"NineOK", "100 Points", lineTallies.get(Line.NineOK)},
+				{"SStraight", "20 Points", lineTallies.get(Line.SStraight)},
+				{"LStraight", "30 Points", lineTallies.get(Line.LStraight)},
+				{"FStraight", "40 Points", lineTallies.get(Line.FStraight)},
 		};
 		String[] columnNames = {"Type", "Points worth", "Times scored"};
 		JTable table = new JTable(tableData, columnNames);

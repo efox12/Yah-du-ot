@@ -11,5 +11,11 @@ public class GameBoard {
 		clusters = new Grouping[9];
 	}
 	
+	public boolean spaceOpen(int x, int y){
+		return true;
+	}
 	
+	public void addRoll(int x, int y){
+		
+	}
 }
