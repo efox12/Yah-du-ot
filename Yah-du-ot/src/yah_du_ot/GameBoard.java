@@ -12,10 +12,28 @@ public class GameBoard {
 	}
 	
 	public boolean spaceOpen(int x, int y){
-		return true;
+		return columns[x].isOpen(y);
 	}
 	
-	public void addRoll(int x, int y){
+	public void addRoll(int value, int x, int y){
+		rows[y].addRoll(value, x);
+		columns[x].addRoll(value, y);
+		clusters[(x/3) + (y/3)].addRoll(value, (x%3) + (y%3) * 3);
 		
+		if (rows[y].isComplete()) {
+			scoreGrouping(rows[y]);
+		}
+		
+		if (columns[x].isComplete()) {
+			scoreGrouping(columns[x]);
+		}
+		
+		if (clusters[(x/3) + (y/3)].isComplete()) {
+			scoreGrouping(clusters[(x/3) + (y/3)]);
+		}
+	}
+	
+	public void scoreGrouping(Grouping toScore) {
+		System.out.println("Scoring");
 	}
 }

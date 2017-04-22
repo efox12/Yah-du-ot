@@ -9,6 +9,8 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 
 
 
@@ -18,10 +20,13 @@ public class YahDuOt {
 	private static ScoreCard Player2 = new ScoreCard("Player 2");
 	
 	public static void main(String[] args) {
+		UIManager.put("OptionPane.messageFont", new Font(Font.SANS_SERIF, Font.PLAIN, 45));
+		UIManager.put("OptionPane.buttonFont", new Font(Font.SANS_SERIF, Font.PLAIN, 45)); 
 		EventQueue.invokeLater(() ->
         {
         	YahduotUX game = new YahduotUX(myDie, Player1, Player2);
         	game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        	JOptionPane.showMessageDialog(game, "Player 1 roll for turn");
         });
   }
 }

@@ -17,6 +17,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Rectangle2D;
 
+import javax.swing.AbstractButton;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.Icon;
@@ -25,6 +26,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
@@ -211,11 +213,18 @@ public class YahduotUX extends JFrame {
 				buttonBox[i][j].setForeground(Color.GRAY);
 				buttonBox[i][j].addActionListener(event ->
 													System.out.println(label + " pressed"));
+				buttonBox[i][j].addActionListener(event ->
+													setButtonText(event));
 				buttons.add(buttonBox[i][j]);
 			}
 		}
 		
 		return buttons;
+	}
+	
+	private void setButtonText(ActionEvent e) {
+		((JButton) e.getSource()).setText(Integer.toString(gameDie.getLastRoll()));
+		((JButton) e.getSource()).setEnabled(false);
 	}
 	
 	private void createRoll(Die thisDie) {

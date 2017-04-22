@@ -10,8 +10,11 @@ import javax.swing.JToggleButton;
 public class Grouping {
 	ArrayList<Integer> groupingList = new ArrayList<Integer>();
 	boolean scored;
+	private int counter;
+	
 	public Grouping(){	
 		scored = false;
+		counter = 0;
 	}
 	
 	public int maxOfAKindFound(int value){
@@ -98,5 +101,10 @@ public class Grouping {
 	
 	public void addRoll(int value, int space){
 		groupingList.set(space, value);
+		counter++;
+	}
+	
+	public boolean isComplete() {
+		return counter == 9;
 	}
 }
