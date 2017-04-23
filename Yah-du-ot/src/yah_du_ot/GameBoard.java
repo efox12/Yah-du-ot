@@ -14,7 +14,16 @@ public class GameBoard {
 	public boolean spaceOpen(int x, int y){
 		return columns[x].isOpen(y);
 	}
-	
+	public void addRandoms(){
+		for(int i = 0; i < 12; i++){
+			int randomSpotX = (int )(Math.random() * 9 + 1);
+			int randomSpotY = (int )(Math.random() * 9 + 1);
+			int randomDie = (int )(Math.random() * 6 + 1);
+			if(randomSpotX < 9){	
+				addRoll(randomDie, randomSpotX, randomSpotY);
+			}
+		}
+	}
 	public void addRoll(int value, int x, int y){
 		rows[y].addRoll(value, x);
 		columns[x].addRoll(value, y);
