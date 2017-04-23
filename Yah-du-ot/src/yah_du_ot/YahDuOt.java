@@ -1,6 +1,7 @@
 package yah_du_ot;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -24,9 +25,17 @@ public class YahDuOt {
 		UIManager.put("OptionPane.buttonFont", new Font(Font.SANS_SERIF, Font.PLAIN, 45)); 
 		EventQueue.invokeLater(() ->
         {
+        	try {
+    	        UIManager.setLookAndFeel( UIManager.getCrossPlatformLookAndFeelClassName() );
+    		} 
+    		catch (Exception e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
         	YahduotUX game = new YahduotUX(myDie, Player1, Player2);
         	game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        	JOptionPane.showMessageDialog(game, "Player 1 roll for turn");
+        	//JOptionPane.showMessageDialog(game, "Player 1 roll for turn");
+        	
         });
   }
 }

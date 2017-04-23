@@ -1,6 +1,7 @@
 package yah_du_ot;
 
 import java.awt.BasicStroke;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
@@ -18,6 +19,7 @@ import java.awt.event.ActionListener;
 import java.awt.geom.Rectangle2D;
 
 import javax.swing.AbstractButton;
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.Icon;
@@ -29,17 +31,19 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 
 public class YahduotUX extends JFrame {
+	
 	private static Toolkit kit = Toolkit.getDefaultToolkit();
 	private static final int GAME_HEIGHT = (int) (0.75 * kit.getScreenSize().height);
-	private static final int GAME_WIDTH = (int) (0.75 * kit.getScreenSize().width);
-	private static final double BOX_INSET_X = GAME_WIDTH * 0.02395;
-	private static final double BOX_INSET_Y = GAME_HEIGHT * 0.04684;
-	private static final double BOX_WIDTH = GAME_WIDTH * 0.647;
-	private static final double BOX_HEIGHT = GAME_HEIGHT * 0.91;
+	private static final int GAME_WIDTH = (int) (0.65 * kit.getScreenSize().width);
+	private static final double BOX_INSET_X = GAME_WIDTH * 0.04395;
+	private static final double BOX_INSET_Y = GAME_HEIGHT * 0.0310;
+	private static final double BOX_WIDTH = GAME_HEIGHT - GAME_HEIGHT / 10-5;
+	private static final double BOX_HEIGHT = GAME_HEIGHT - GAME_HEIGHT / 10-5;
 	
-	private final Font BOARD_FONT = new Font(Font.SANS_SERIF, Font.PLAIN, GAME_WIDTH / 30);
+	private final Font BOARD_FONT = new Font(Font.SANS_SERIF, Font.BOLD, GAME_WIDTH / 50);
 	private static Drawing myDrawing;
 	private Container rollSpace;
 	private Die gameDie;
@@ -48,23 +52,26 @@ public class YahduotUX extends JFrame {
 	private ScoreCard player2;
 	
 	public YahduotUX(Die thisDie, ScoreCard Player1, ScoreCard Player2) {
+		
 		this.setTitle("Yah-du-ot");
+		
+		//setSize(1000,600);
 		this.setResizable(false);
 		this.setSize(new Dimension(GAME_WIDTH, GAME_HEIGHT));
 		this.setLocation(GAME_WIDTH / 6, GAME_HEIGHT / 6);
 		this.setIconImage(new ImageIcon(this.getClass().getResource("Icon.jpg")).getImage());
 		this.player1 = Player1;
 		this.player2 = Player2;
-		
+		setLayout(new BorderLayout());
 		gameDie = thisDie;
 		myDie.addActionListener(event -> updateDieButton());
 		myDie.addActionListener(event -> revalidate());
 		myDie.addActionListener(event -> gameDie.roll());
 		
-		getContentPane().setLayout(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
-		
+		getContentPane().setLayout(new BorderLayout());
+		getContentPane().setBackground(Color.decode("#CEE3F6"));
 		JLabel Players = new JLabel("Players");
+		Players.setAlignmentX(CENTER_ALIGNMENT);
 		Players.setFont(BOARD_FONT);
 		
 		JLabel P1 = new JLabel("Player 1: 0");
@@ -73,79 +80,73 @@ public class YahduotUX extends JFrame {
 		JLabel P2 = new JLabel("Player 2: 0");
 		P2.setFont(BOARD_FONT);
 		
-		JButton P1Score = new JButton("Score");
+		JButton P1Score = new JButton("Score Card");
+		P1Score.setBackground(Color.decode("#2E64FE"));
+		P1Score.setOpaque(true);
 		P1Score.setFont(BOARD_FONT);
+		P1Score.setPreferredSize(new Dimension(150,50));
+		P1Score.setMinimumSize(new Dimension(150,50));
+		P1Score.setMaximumSize(new Dimension(150,50));
 		P1Score.addActionListener(event -> displayScore(player1));
 		
-		JButton P2Score = new JButton("Score");
+		JButton P2Score = new JButton("Score Card");
+		P2Score.setBackground(Color.decode("#2E64FE"));
+		P2Score.setOpaque(true);
 		P2Score.setFont(BOARD_FONT);
+		P2Score.setPreferredSize(new Dimension(150,50));
+		P2Score.setMinimumSize(new Dimension(150,50));
+		P2Score.setMaximumSize(new Dimension(150,50));
 		P2Score.addActionListener(event -> displayScore(player2));
-		
+		//createRoll(thisDie);
 		JButton filler = new JButton("Filler");
-		filler.setFont(BOARD_FONT);
+		//filler.setFont(BOARD_FONT);
 		
-		Container playerInfo = new Container();
-		playerInfo.setLayout(new GridBagLayout());
+		JPanel leftSide = new JPanel();
+		leftSide.setLayout(new BoxLayout(leftSide, BoxLayout.Y_AXIS));
+		leftSide.setBackground(Color.decode("#CEE3F6"));
+		leftSide.setPreferredSize(new Dimension(40,390));
+		leftSide.setMinimumSize(new Dimension(40,390));
+		leftSide.setMaximumSize(new Dimension(40,390));
 		
-		createRoll(thisDie);
+		JPanel middleBox = new JPanel();
+		middleBox.setLayout(new BoxLayout(middleBox, BoxLayout.Y_AXIS));
+		middleBox.setBackground(Color.decode("#CEE3F6"));
+		JPanel rightSide = new JPanel();
+		rightSide.setPreferredSize(new Dimension(290,200));
+		rightSide.setMinimumSize(new Dimension(290,200));
+		rightSide.setMaximumSize(new Dimension(290,200));
 		
-		c.weighty = 1.0;
-		c.weightx = 1.0;
-		c.gridx = 1;
-		c.gridy = 0;
-		c.gridwidth = 2;
-		playerInfo.add(Players, c);
+		rightSide.setLayout(new BoxLayout(rightSide, BoxLayout.Y_AXIS));
+		rightSide.setBackground(Color.decode("#CEE3F6"));
+		JPanel rightSide1 = new JPanel();
+		rightSide1.setBackground(Color.decode("#CEE3F6"));
+		JPanel rightSide2 = new JPanel();
+		rightSide2.setBackground(Color.decode("#CEE3F6"));
+		rightSide.add(Box.createRigidArea(new Dimension(0,50)));
+		rightSide.add(Players);
+		rightSide.add(Box.createRigidArea(new Dimension(0,20)));
+		rightSide.add(rightSide1);
+		rightSide.add(Box.createRigidArea(new Dimension(0,20)));
+		rightSide.add(rightSide2);
+		rightSide1.add(P1);
+
+		rightSide1.add(P1Score);
 		
-		c.gridx = 0;
-		c.gridy = 1;
-		c.gridwidth = 2;
-		playerInfo.add(P1, c);
+		rightSide2.add(P2);
 		
-		c.gridx = 2;
-		c.gridwidth = 1;
-		playerInfo.add(P1Score, c);
+		rightSide2.add(P2Score);
 		
-		c.gridx = 0;
-		c.gridy = 2;
-		c.gridwidth = 2;
-		playerInfo.add(P2, c);
+		//rightSide.add(P1Score);
 		
-		c.gridx = 2;
-		c.gridwidth = 1;
-		playerInfo.add(P2Score, c);
+		rightSide.add(createRoll(thisDie));
 		
-		c.fill = GridBagConstraints.BOTH;
-		c.gridx = 2;
-		c.gridy = 1;
-		c.gridx = 2;
-		c.gridheight = 1;
-		c.weighty = 0.1;
-		c.weightx = 0.1;
-		playerInfo.validate();
-		getContentPane().add(playerInfo, c);
-		
-		c.gridy = 2;
-		getContentPane().add(rollSpace, c);
-		
-		c.gridy = 0;
-		c.gridx = 1;
-		c.weighty = 0;
-		getContentPane().add(createColumnLabels(), c);
-		
-		c.gridy = 1;
-		c.gridx = 0;
-		c.gridheight = 2;
-		getContentPane().add(createRowLabels(), c);
-		
-		c.gridy = 1;
-		c.gridx = 1;
-		c.gridwidth = 0;
-		c.gridheight = 2;
-		c.gridwidth = 1;
-		c.weightx = 0.9;
-		c.weighty = 1.0;
-		getContentPane().add(createButtonMap(), c);
-		
+		add(rightSide, BorderLayout.LINE_END);
+		middleBox.add(createColumnLabels());
+		leftSide.add(Box.createRigidArea(new Dimension(0,20)));
+		leftSide.add(createRowLabels());
+		add(leftSide, BorderLayout.LINE_START);
+		middleBox.add(createButtonMap());
+		add(middleBox, BorderLayout.CENTER);
 		/*
 		Menu mainMenu = new Menu();
     	mainMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -172,6 +173,12 @@ public class YahduotUX extends JFrame {
 		Container columns = new Container();
 		columns.setLayout(new GridLayout(1, 9));
 		
+		int gridSize = GAME_HEIGHT - GAME_HEIGHT / 10;
+		
+		columns.setPreferredSize(new Dimension(gridSize,20));
+		columns.setMinimumSize(new Dimension(gridSize,20));
+		columns.setMaximumSize(new Dimension(gridSize,20));
+		
 		JLabel temp = new JLabel();
 		for(char s = 'A'; s <= 'I'; s++) {
 			temp = new JLabel(Character.toString(s));
@@ -188,11 +195,17 @@ public class YahduotUX extends JFrame {
 		Container rows = new Container();
 		rows.setLayout(new GridLayout(9, 1));
 		
+		int gridSize = GAME_HEIGHT - GAME_HEIGHT / 10;
+		
+		rows.setPreferredSize(new Dimension(20,gridSize));
+		rows.setMinimumSize(new Dimension(20,gridSize));
+		rows.setMaximumSize(new Dimension(20,gridSize));
+		
 		JLabel temp = new JLabel();
 		for(int i = 1; i <= 9; i++) {
 			temp = new JLabel(Integer.toString(i));
 			temp.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, GAME_HEIGHT / 30));
-			temp.setHorizontalAlignment(JLabel.CENTER);
+			temp.setHorizontalAlignment(JLabel.RIGHT);
 			temp.setVerticalAlignment(JLabel.CENTER);
 			rows.add(temp);
 		}
@@ -200,17 +213,27 @@ public class YahduotUX extends JFrame {
 		return rows;
 	}
 	
-	private Container createButtonMap() {
-		Container buttons = new Container();
+	private JPanel createButtonMap() {
+		int gridSize = GAME_HEIGHT - GAME_HEIGHT / 10;
+		JPanel buttons = new JPanel();
 		buttons.setLayout(new GridLayout(9, 9));
+		buttons.setPreferredSize(new Dimension(gridSize,gridSize));
+		buttons.setMinimumSize(new Dimension(gridSize,gridSize));
+		buttons.setMaximumSize(new Dimension(gridSize,gridSize));
+		//buttons.setBackground(Color.BLUE);
 		JButton [][] buttonBox = new JButton[9][9];
 		
 		for (int i = 0; i < 9; i++) {
 			for (int j = 0; j < 9; j++) {
 				String label = Character.toString((char) (i + 65)) + (j + 1) + "";
 				buttonBox[i][j] = new JButton(label);
+				buttonBox[i][j] = new JButton();
+				buttonBox[i][j].setSize(new Dimension(20,20));
+				buttonBox[i][j].setBackground(Color.WHITE);
+				buttonBox[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK));
+				buttonBox[i][j].setOpaque(true);
 				buttonBox[i][j].setFont(BOARD_FONT);
-				buttonBox[i][j].setForeground(Color.GRAY);
+				buttonBox[i][j].setForeground(Color.BLACK);
 				buttonBox[i][j].addActionListener(event ->
 													System.out.println(label + " pressed"));
 				buttonBox[i][j].addActionListener(event ->
@@ -227,23 +250,27 @@ public class YahduotUX extends JFrame {
 		((JButton) e.getSource()).setEnabled(false);
 	}
 	
-	private void createRoll(Die thisDie) {
+	private Container createRoll(Die thisDie) {
 		rollSpace = new Container();
 		BoxLayout rollLayout = new BoxLayout(rollSpace, BoxLayout.PAGE_AXIS);
 		rollSpace.setLayout(rollLayout);
 		
+		
 		JLabel turn = new JLabel("First turn not decided");
 		turn.setFont(BOARD_FONT);
 		turn.setAlignmentX(CENTER_ALIGNMENT);
-		rollSpace.add(Box.createRigidArea(new Dimension(0, 200)));
+		//rollSpace.add(Box.createRigidArea(new Dimension(0, 50)));
 		rollSpace.add(turn);
-		rollSpace.add(Box.createRigidArea(new Dimension(0, 200)));
+		rollSpace.add(Box.createRigidArea(new Dimension(0, 50)));
 		updateDieButton();
-		
+		myDie.setSize(new Dimension(100,100));
+		myDie.setBackground(Color.decode("#045FB4"));
 		myDie.setIcon(new ImageIcon(getDieImage().getImage().getScaledInstance(GAME_WIDTH / 8, GAME_WIDTH / 8, Image.SCALE_DEFAULT)));
 		myDie.setAlignmentX(Component.CENTER_ALIGNMENT);
 		rollSpace.add(myDie);
+		rollSpace.add(Box.createRigidArea(new Dimension(0, 100)));
 		revalidate();
+		return rollSpace;
 	}
 
 	
@@ -273,7 +300,7 @@ public class YahduotUX extends JFrame {
 	class Drawing extends JPanel {
 		
 		public Drawing() {
-			this.setBounds(0, 0, GAME_WIDTH, GAME_HEIGHT);
+			//this.setBounds(0, 0, GAME_WIDTH, GAME_HEIGHT);
 			this.setPreferredSize(super.getPreferredSize());
 		}
 		
