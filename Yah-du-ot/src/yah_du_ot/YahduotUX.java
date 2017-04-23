@@ -50,8 +50,10 @@ public class YahduotUX extends JFrame {
 	private JButton myDie = new JButton();
 	private ScoreCard player1;
 	private ScoreCard player2;
+	private GameBoard board;
+	private YButton [][] buttonBox = new YButton[9][9];
 	
-	public YahduotUX(Die thisDie, ScoreCard Player1, ScoreCard Player2) {
+	public YahduotUX(Die thisDie, ScoreCard Player1, ScoreCard Player2, GameBoard board) {
 		
 		this.setTitle("Yah-du-ot");
 		
@@ -62,6 +64,7 @@ public class YahduotUX extends JFrame {
 		this.setIconImage(new ImageIcon(this.getClass().getResource("Icon.jpg")).getImage());
 		this.player1 = Player1;
 		this.player2 = Player2;
+		this.board = board;
 		setLayout(new BorderLayout());
 		gameDie = thisDie;
 		myDie.addActionListener(event -> updateDieButton());
@@ -221,13 +224,11 @@ public class YahduotUX extends JFrame {
 		buttons.setMinimumSize(new Dimension(gridSize,gridSize));
 		buttons.setMaximumSize(new Dimension(gridSize,gridSize));
 		//buttons.setBackground(Color.BLUE);
-		JButton [][] buttonBox = new JButton[9][9];
 		
 		for (int i = 0; i < 9; i++) {
 			for (int j = 0; j < 9; j++) {
-				String label = Character.toString((char) (i + 65)) + (j + 1) + "";
-				buttonBox[i][j] = new JButton(label);
-				buttonBox[i][j] = new JButton();
+				String label = Character.toString((char) (j + 65)) + (i + 1) + "";
+				buttonBox[i][j] = new YButton(j, i);
 				buttonBox[i][j].setSize(new Dimension(20,20));
 				buttonBox[i][j].setBackground(Color.WHITE);
 				buttonBox[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -238,6 +239,7 @@ public class YahduotUX extends JFrame {
 													System.out.println(label + " pressed"));
 				buttonBox[i][j].addActionListener(event ->
 													setButtonText(event));
+				buttonBox[i][j].addActionListener(buttonBox[i][j]);
 				buttons.add(buttonBox[i][j]);
 			}
 		}
@@ -246,8 +248,8 @@ public class YahduotUX extends JFrame {
 	}
 	
 	private void setButtonText(ActionEvent e) {
-		((JButton) e.getSource()).setText(Integer.toString(gameDie.getLastRoll()));
-		((JButton) e.getSource()).setEnabled(false);
+		((YButton) e.getSource()).setText(Integer.toString(gameDie.getLastRoll()));
+		((YButton) e.getSource()).setEnabled(false);
 	}
 	
 	private Container createRoll(Die thisDie) {
@@ -384,6 +386,29 @@ public class YahduotUX extends JFrame {
 			super.paintComponent(g);
 		    g.drawImage(bg, -70, -100, this);
 		  }
+	}
+	
+	class YButton extends JButton implements ActionListener{
+		private int x;
+		private int y;
+		
+		public YButton(int x, int y) {
+			this.x = x;
+			this.y = y;
+		}
+		
+		public int getXCoord() {
+			return x;
+		}
+		
+		public int getYCoord() {
+			return y;
+		}
+		
+		public void actionPerformed(ActionEvent e) {
+			board.addRoll(gameDie.getLastRoll(), this.x, this.y);
+		}
+		
 	}
 
 }

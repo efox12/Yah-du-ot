@@ -19,10 +19,12 @@ public class YahDuOt {
 	private static Die myDie = new Die();
 	private static ScoreCard Player1 = new ScoreCard("Player 1");
 	private static ScoreCard Player2 = new ScoreCard("Player 2");
+	private static GameBoard board = new GameBoard();
 	
 	public static void main(String[] args) {
 		UIManager.put("OptionPane.messageFont", new Font(Font.SANS_SERIF, Font.PLAIN, 45));
 		UIManager.put("OptionPane.buttonFont", new Font(Font.SANS_SERIF, Font.PLAIN, 45)); 
+		
 		EventQueue.invokeLater(() ->
         {
         	try {
@@ -32,7 +34,7 @@ public class YahDuOt {
     			// TODO Auto-generated catch block
     			e.printStackTrace();
     		}
-        	YahduotUX game = new YahduotUX(myDie, Player1, Player2);
+        	YahduotUX game = new YahduotUX(myDie, Player1, Player2, board);
         	game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         	//JOptionPane.showMessageDialog(game, "Player 1 roll for turn");
         	

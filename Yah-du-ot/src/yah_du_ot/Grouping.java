@@ -1,5 +1,6 @@
 package yah_du_ot;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Dictionary;
 
@@ -8,7 +9,7 @@ import javax.swing.JToggleButton;
 
 
 public class Grouping {
-	ArrayList<Integer> groupingList = new ArrayList<Integer>();
+	int[] groupingList;
 	boolean scored;
 	private int counter;
 	
@@ -17,10 +18,16 @@ public class Grouping {
 		counter = 0;
 	}
 	
+	public Grouping(int listSize) {
+		groupingList = new int[listSize];
+		scored = false;
+		counter = 0;
+	}
+	
 	public int maxOfAKindFound(int value){
 		int valueOfAKind = 0;
 		for(int i = 0; i < 9; i++){
-			if(groupingList.get(i) == value){
+			if(groupingList[i] == value){
 				valueOfAKind++;
 			}
 		}
@@ -43,13 +50,13 @@ public class Grouping {
 	}
 	
 	public int maxStraightFound(){
-		Collections.sort(groupingList);
+		Arrays.sort(groupingList);
 		int maxLength = 1;
 		int currentLength = 1;
 		for(int i=0; i<9; i++){
-			if(groupingList.get(i) + 1 == groupingList.get(i + 1))
+			if(groupingList[i] + 1 == groupingList[i + 1])
 	            currentLength++;
-	        else if(groupingList.get(i) + 1 < groupingList.get(i + 1))
+	        else if(groupingList[i] + 1 < groupingList[i + 1])
 	            currentLength = 1;
 	        if(currentLength > maxLength)
 	            maxLength = currentLength;
@@ -93,14 +100,14 @@ public class Grouping {
 	}
 	
 	public boolean isOpen(int space){
-		if(groupingList.get(space) == null)
+		if(groupingList[space] == 0)
 			return true;
 		else
 			return false;
 	}
 	
 	public void addRoll(int value, int space){
-		groupingList.set(space, value);
+		groupingList[space] = value;
 		counter++;
 	}
 	
