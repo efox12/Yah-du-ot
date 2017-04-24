@@ -319,43 +319,57 @@ public class YahduotUX extends JFrame {
 		score.setTitle("Pick a score");
 		ArrayList<Line> options = g.score();
 
+		JButton confirm = new JButton("Confirm");
+		confirm.setFont(BOARD_FONT);
+		
 		JLabel header = new JLabel();
 		header.setFont(BOARD_FONT);
 		header.setText("Player " + (!playerTurn ? 1 : 2) + ": " + type); 
 		scoringOptions.add(header);
-		for (int i = 0; i < options.size(); i++) {
-			Line l = options.get(i);
-			JRadioButton b = new JRadioButton(l.toString());
-			b.setFont(BOARD_FONT);
-			b.addActionListener(event -> selectedLine = l);
-			b.setSelected(true);
-			selectedLine = l;
-			group.add(b);
-			scoringOptions.add(b);
-		}
-		
-		JButton confirm = new JButton("Confirm");
-		confirm.setFont(BOARD_FONT);
-		confirm.addActionListener(event -> 
-									{if (groups.size() == 1) {
-										return;
-									} else {
-										groups.remove(0);
-										types.remove(0);
-										scoreGrouping(groups, types);
-									}});
-		confirm.addActionListener(event -> setEnabled(true));
-		confirm.addActionListener(event -> score.setVisible(false));
-		confirm.addActionListener(event -> score.dispose());
-		confirm.addActionListener(event -> 
-									{if (!playerTurn) {
-										player1.addTallies(1, selectedLine);
-										P1.setText("Player 1: " + player1.getTotal());
-									} else {
-										player2.addTallies(1, selectedLine);
-										P2.setText("Player 2: " + player2.getTotal());}});
+		if (options.size() == 0) {
+			JLabel sorry = new JLabel("No scores available");
+			sorry.setFont(BOARD_FONT);
+			scoringOptions.add(sorry);
+			confirm.addActionListener(event -> setEnabled(true));
+			confirm.addActionListener(event -> score.setVisible(false));
+			confirm.addActionListener(event -> score.dispose());
+		} else {
+			
+			for (int i = 0; i < options.size(); i++) {
+				Line l = options.get(i);
+				JRadioButton b = new JRadioButton(l.toString());
+				b.setFont(BOARD_FONT);
+				b.addActionListener(event -> selectedLine = l);
+				b.setSelected(true);
+				selectedLine = l;
+				group.add(b);
+				scoringOptions.add(b);
+			}
+			
+			if (groups.size() == 1) {
+				confirm.addActionListener(event -> determineGameOver());
+			}
+			confirm.addActionListener(event -> 
+										{if (groups.size() == 1) {
+											return;
+										} else {
+											groups.remove(0);
+											types.remove(0);
+											scoreGrouping(groups, types);
+										}});
+			confirm.addActionListener(event -> setEnabled(true));
+			confirm.addActionListener(event -> score.setVisible(false));
+			confirm.addActionListener(event -> score.dispose());
+			confirm.addActionListener(event -> 
+										{if (!playerTurn) {
+											player1.addTallies(1, selectedLine);
+											P1.setText("Player 1: " + player1.getTotal());
+										} else {
+											player2.addTallies(1, selectedLine);
+											P2.setText("Player 2: " + player2.getTotal());}});
+		}	
 		scoringOptions.add(confirm);
-		
+			
 		score.setSize(new Dimension(GAME_WIDTH / 2, GAME_HEIGHT / 2));
 		score.setLocation(GAME_WIDTH / 3, GAME_HEIGHT / 3);
 		score.setResizable(false);
@@ -364,6 +378,33 @@ public class YahduotUX extends JFrame {
 		score.getContentPane().add(scoringOptions);
 		this.setEnabled(false);
 		score.setVisible(true);
+	}
+	
+	private void determineGameOver() {
+		System.out.println("Game Over");
+		if (board.isComplete()) {
+			myDie.setEnabled(false);
+			JLabel message = new JLabel();
+			message.setFont(BOARD_FONT);
+			message.setHorizontalAlignment(JLabel.CENTER);
+			if (player1.getTotal() > player2.getTotal()){
+				message.setText("Player 1 wins!");
+			} else if (player1.getTotal() < player2.getTotal()) {
+				message.setText("Player 2 wins!");
+			} else {
+				message.setText("Draw!");
+			}
+			
+			JFrame gameOver = new JFrame();
+			gameOver.setLayout(new GridLayout(0,1));
+			gameOver.setTitle("Game Over");
+			gameOver.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+			gameOver.setResizable(false);
+			gameOver.add(message);
+			gameOver.setLocation(GAME_WIDTH/2 + GAME_WIDTH/6, GAME_HEIGHT/2 + GAME_HEIGHT/6);
+			gameOver.setSize(GAME_WIDTH/3, GAME_HEIGHT/3);
+			gameOver.setVisible(true);
+		}
 	}
 	
 	class Drawing extends JPanel {

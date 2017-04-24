@@ -58,16 +58,16 @@ public class GameBoard {
 		}
 		
 		if (columns[x].isComplete()) {
-			System.out.println("Column " + x + " complete");
+			System.out.println("Column " + (char)(x+65) + " complete");
 			groups.add(columns[x]);
-			types.add("Column " + (x+1));
+			types.add("Column " + (char)(x+65));
 			scorable = true;
 		}
 		
 		if (clusters[(x/3) + (y/3) * 3].isComplete()) {
 			System.out.println("Cluster " + ((x/3) + (y/3) * 3) + " complete");
 			groups.add((clusters[(x/3) + (y/3) * 3])); 
-			types.add("Cluster (" + (x/3) + ", "  + (3 - (y/3)) + ")");
+			types.add("Cluster (" + (x/3 + 1) + ", "  + (3 - (y/3)) + ")");
 			scorable = true;
 		}
 		
