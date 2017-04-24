@@ -40,8 +40,8 @@ public class ScoreCard {
 		lineTallies.put(Line.FStraight, 0);
 	}
 	
-	public void addTallies(int numberOfTallies, Line lineEnum){
-		lineTallies.put(lineEnum, numberOfTallies);
+	public void addTallies(int numberTallies, Line lineEnum){
+		lineTallies.put(lineEnum, lineTallies.get(lineEnum) + numberTallies);
 	}
 	
 	public int getTotal() {

@@ -298,8 +298,9 @@ public class YahduotUX extends JFrame {
 		return diePic;
 	}
 	
-	public void scoreGrouping(Grouping g, String type) {
-		this.setEnabled(false);
+	public void scoreGrouping(ArrayList<Grouping> groups, ArrayList<String> types) {
+		Grouping g = groups.get(0);
+		String type = types.get(0);
 		JPanel scoringOptions = new JPanel(new GridLayout(0,1));
 		ButtonGroup group = new ButtonGroup();
 		JDialog score = new JDialog();
@@ -323,6 +324,14 @@ public class YahduotUX extends JFrame {
 		
 		JButton confirm = new JButton("Confirm");
 		confirm.setFont(BOARD_FONT);
+		confirm.addActionListener(event -> 
+									{if (groups.size() == 1) {
+										return;
+									} else {
+										groups.remove(0);
+										types.remove(0);
+										scoreGrouping(groups, types);
+									}});
 		confirm.addActionListener(event -> setEnabled(true));
 		confirm.addActionListener(event -> score.setVisible(false));
 		confirm.addActionListener(event -> score.dispose());
@@ -341,8 +350,8 @@ public class YahduotUX extends JFrame {
 		score.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
 		score.getContentPane().add(scoringOptions);
+		this.setEnabled(false);
 		score.setVisible(true);
-		
 	}
 	
 	class Drawing extends JPanel {

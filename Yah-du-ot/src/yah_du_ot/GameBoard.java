@@ -1,5 +1,7 @@
 package yah_du_ot;
 
+import java.util.ArrayList;
+
 public class GameBoard {
 	private Grouping[] rows;
 	private Grouping[] columns;
@@ -44,21 +46,33 @@ public class GameBoard {
 		columns[x].addRoll(value, y);
 		clusters[(x/3) + (y/3) * 3].addRoll(value, (x%3) + (y%3) * 3);
 		
+		boolean scorable = false;
+		ArrayList<Grouping> groups = new ArrayList<Grouping>();
+		ArrayList<String> types = new ArrayList<String>();
+		
 		if (rows[y].isComplete()) {
 			System.out.println("Row " + y + " complete");
-			UX.scoreGrouping(rows[y], "Row " + (y+1));
+			groups.add(rows[y]);
+			types.add("Row " + (y+1));
+			scorable = true;
 		}
 		
 		if (columns[x].isComplete()) {
 			System.out.println("Column " + x + " complete");
-			UX.scoreGrouping(columns[x], "Column " + (x+1));
+			groups.add(columns[x]);
+			types.add("Column " + (x+1));
+			scorable = true;
 		}
 		
 		if (clusters[(x/3) + (y/3) * 3].isComplete()) {
 			System.out.println("Cluster " + ((x/3) + (y/3) * 3) + " complete");
-			UX.scoreGrouping(clusters[(x/3) + (y/3) * 3], 
-							 "Cluster (" + (x/3 + 1) + ", "  + (3 - (y/3) * 3) + ")");
-	
+			groups.add((clusters[(x/3) + (y/3) * 3])); 
+			types.add("Cluster (" + (x/3 + 1) + ", "  + (3 - (y/3) * 3) + ")");
+			scorable = true;
+		}
+		
+		if (scorable) {
+			UX.scoreGrouping(groups, types);
 		}
 	}
 	
