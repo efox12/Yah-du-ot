@@ -14,6 +14,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
@@ -54,6 +55,8 @@ public class YahduotUX extends JFrame {
 	private GameBoard board;
 	private YButton [][] buttonBox = new YButton[9][9];
 	private Line selectedLine;
+	private ArrayList<Color> lineColors = new ArrayList<Color>();
+	private ArrayList<Line2D.Double> straightLines = new ArrayList<Line2D.Double>();	
 	
 	public YahduotUX(Die thisDie, ScoreCard Player1, ScoreCard Player2, GameBoard board) {
 		
@@ -83,11 +86,13 @@ public class YahduotUX extends JFrame {
 		JLabel Players = new JLabel("Players");
 		Players.setAlignmentX(CENTER_ALIGNMENT);
 		Players.setFont(BOARD_FONT);
-		P1 = new JLabel("Player 1: 0   ");	
+		P1 = new JLabel("Player 1: 0   ");
 		P1.setFont(BOARD_FONT);
+		P1.setForeground(Color.BLUE);
 		
 		P2 = new JLabel("Player 2: 0   ");
 		P2.setFont(BOARD_FONT);
+		P2.setForeground(Color.RED);
 		
 		JButton P1Score = new JButton("Score Card");
 		P1Score.setBackground(Color.decode("#0F54C1"));
@@ -330,6 +335,9 @@ public class YahduotUX extends JFrame {
 			JLabel sorry = new JLabel("No scores available");
 			sorry.setFont(BOARD_FONT);
 			scoringOptions.add(sorry);
+			if (groups.size() == 1) {
+				confirm.addActionListener(event -> determineGameOver());
+			}
 			confirm.addActionListener(event -> setEnabled(true));
 			confirm.addActionListener(event -> score.setVisible(false));
 			confirm.addActionListener(event -> score.dispose());
@@ -380,8 +388,37 @@ public class YahduotUX extends JFrame {
 		score.setVisible(true);
 	}
 	
+	public void addBox(int x, int y) {
+		for (int i = x*3; i < x*3+3; i++) {
+			for (int j = y*3; j < y*3+3; j++){
+				if (!playerTurn) {
+					buttonBox[j][i].setBackground(new Color(179, 217, 255));
+				} else {
+					buttonBox[j][i].setBackground(new Color(255, 187, 187));
+				}
+			}
+		}
+	}
+	
+	public void addLine(int x1, int y1, int x2, int y2) {
+		if (!playerTurn) {
+			lineColors.add(new Color(55, 130, 255));
+		} else {
+			lineColors.add(new Color(255, 87, 87));
+		}
+		
+		
+		double lx1 = (0.5 * (BOX_WIDTH/9)) + ((x1) * BOX_WIDTH/9) + BOX_INSET_X;
+		double lx2 = ((x2) * BOX_WIDTH/9) + BOX_INSET_X + (0.5 * (BOX_WIDTH/9));
+		double ly1 = (0.5 * (BOX_WIDTH/9)) + ((y1) * BOX_WIDTH/9) + BOX_INSET_Y;
+		double ly2 = ((y2) * BOX_WIDTH/9) + BOX_INSET_Y + (0.5 * (BOX_WIDTH/9));
+		
+		System.out.println("Adding Line (" + lx1 + ", " + ly1 + " -> (" + lx2 + ", " + ly2 + ")");
+		straightLines.add(new Line2D.Double(lx1, ly1, lx2, ly2));
+		getGlassPane().repaint();
+	}
+	
 	private void determineGameOver() {
-		System.out.println("Game Over");
 		if (board.isComplete()) {
 			myDie.setEnabled(false);
 			JLabel message = new JLabel();
@@ -424,6 +461,11 @@ public class YahduotUX extends JFrame {
 			g2.draw(box);
 			g2.draw(horizontal);
 			g2.draw(vertical);
+			
+			for (int i = 0; i < straightLines.size(); i++) {
+				g2.setPaint(lineColors.get(i));
+				g2.draw(straightLines.get(i));
+			}
 		}
 		
 		
