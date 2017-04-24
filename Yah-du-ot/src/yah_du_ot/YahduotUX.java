@@ -85,13 +85,10 @@ public class YahduotUX extends JFrame {
 		JLabel Players = new JLabel("Players");
 		Players.setAlignmentX(CENTER_ALIGNMENT);
 		Players.setFont(BOARD_FONT);
-		JLabel P1 = new JLabel("Player 1: 0   ");
-		
-		P1 = new JLabel("Player 1: 0");
+		P1 = new JLabel("Player 1: 0   ");	
 		P1.setFont(BOARD_FONT);
 		
-		JLabel P2 = new JLabel("Player 2: 0   ");
-		P2 = new JLabel("Player 2: 0");
+		P2 = new JLabel("Player 2: 0   ");
 		P2.setFont(BOARD_FONT);
 		
 		JButton P1Score = new JButton("Score Card");

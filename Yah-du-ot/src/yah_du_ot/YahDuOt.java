@@ -32,7 +32,6 @@ public class YahDuOt {
         	UIManager.put("InternalFrame.activeTitleBackground", new ColorUIResource(Color.BLUE));
         	UIManager.put("InternalFrame.activeTitleForeground", new ColorUIResource(Color.WHITE));
         	UIManager.put("InternalFrame.titleFont", new Font("Dialog", Font.BOLD, 11));
-        	YahduotUX game = new YahduotUX(myDie, Player1, Player2, board);
         	game = new YahduotUX(myDie, Player1, Player2, board);
         	board.addUX(game);
         	game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
