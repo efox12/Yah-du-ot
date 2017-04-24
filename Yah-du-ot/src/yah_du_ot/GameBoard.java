@@ -46,17 +46,19 @@ public class GameBoard {
 		
 		if (rows[y].isComplete()) {
 			System.out.println("Row " + y + " complete");
-			UX.scoreGrouping(rows[y]);
+			UX.scoreGrouping(rows[y], "Row " + (y+1));
 		}
 		
 		if (columns[x].isComplete()) {
 			System.out.println("Column " + x + " complete");
-			UX.scoreGrouping(columns[x]);
+			UX.scoreGrouping(columns[x], "Column " + (x+1));
 		}
 		
 		if (clusters[(x/3) + (y/3) * 3].isComplete()) {
 			System.out.println("Cluster " + ((x/3) + (y/3) * 3) + " complete");
-			UX.scoreGrouping(clusters[(x/3) + (y/3) * 3]);
+			UX.scoreGrouping(clusters[(x/3) + (y/3) * 3], 
+							 "Cluster (" + (x/3 + 1) + ", "  + (3 - (y/3) * 3) + ")");
+	
 		}
 	}
 	

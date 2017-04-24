@@ -21,8 +21,10 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.ButtonModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -42,6 +44,7 @@ public class YahduotUX extends JFrame {
 	private final Font BOARD_FONT = new Font(Font.SANS_SERIF, Font.BOLD, (int) (GAME_WIDTH / 50));
 	private static Drawing myDrawing;
 	private boolean turn;
+	private boolean pressed;
 	private JLabel P1;
 	private JLabel P2;
 	private Container rollSpace;
@@ -297,17 +300,25 @@ public class YahduotUX extends JFrame {
 		return diePic;
 	}
 	
-	public void scoreGrouping(Grouping g) {
+	public void scoreGrouping(Grouping g, String type) {
 		this.setEnabled(false);
 		JPanel scoringOptions = new JPanel(new GridLayout(0,1));
 		ButtonGroup group = new ButtonGroup();
-		JFrame score = new JFrame("Select a score");
+		JDialog score = new JDialog();
+		score.setTitle("Pick a score");
 		ArrayList<Line> options = g.score();
+
+		JLabel header = new JLabel();
+		header.setFont(BOARD_FONT);
+		header.setText("Player " + (!turn ? 1 : 2) + ": " + type); 
+		scoringOptions.add(header);
 		for (int i = 0; i < options.size(); i++) {
 			Line l = options.get(i);
 			JRadioButton b = new JRadioButton(l.toString());
 			b.setFont(BOARD_FONT);
 			b.addActionListener(event -> selectedLine = l);
+			b.setSelected(true);
+			selectedLine = l;
 			group.add(b);
 			scoringOptions.add(b);
 		}
@@ -328,6 +339,8 @@ public class YahduotUX extends JFrame {
 		
 		score.setSize(new Dimension(GAME_WIDTH / 2, GAME_HEIGHT / 2));
 		score.setLocation(GAME_WIDTH / 3, GAME_HEIGHT / 3);
+		score.setResizable(false);
+		score.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
 		score.getContentPane().add(scoringOptions);
 		score.setVisible(true);
