@@ -2,8 +2,6 @@ package yah_du_ot;
 
 import java.util.Random;
 
-import org.junit.Test;
-
 public class Die {
 	int lastRoll;
 	Random r;

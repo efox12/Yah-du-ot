@@ -2,9 +2,6 @@ package yah_du_ot;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import org.junit.Test;
-
-
 public class Grouping {
 	int[] groupingList;
 	boolean scored;
