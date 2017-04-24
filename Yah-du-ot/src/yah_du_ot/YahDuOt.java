@@ -1,9 +1,11 @@
 package yah_du_ot;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
+import javax.swing.plaf.ColorUIResource;
 
 
 
@@ -27,6 +29,10 @@ public class YahDuOt {
     			// TODO Auto-generated catch block
     			e.printStackTrace();
     		}
+        	UIManager.put("InternalFrame.activeTitleBackground", new ColorUIResource(Color.BLUE));
+        	UIManager.put("InternalFrame.activeTitleForeground", new ColorUIResource(Color.WHITE));
+        	UIManager.put("InternalFrame.titleFont", new Font("Dialog", Font.BOLD, 11));
+        	YahduotUX game = new YahduotUX(myDie, Player1, Player2, board);
         	game = new YahduotUX(myDie, Player1, Player2, board);
         	board.addUX(game);
         	game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
