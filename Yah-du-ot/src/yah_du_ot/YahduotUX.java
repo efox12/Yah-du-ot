@@ -21,7 +21,6 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
-import javax.swing.ButtonModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -44,7 +43,6 @@ public class YahduotUX extends JFrame {
 	private final Font BOARD_FONT = new Font(Font.SANS_SERIF, Font.BOLD, (int) (GAME_WIDTH / 50));
 	private static Drawing myDrawing;
 	private boolean turn;
-	private boolean pressed;
 	private JLabel P1;
 	private JLabel P2;
 	private Container rollSpace;
