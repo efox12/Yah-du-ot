@@ -32,6 +32,7 @@ public class GameBoard {
 	public boolean spaceOpen(int x, int y){
 		return columns[x].isOpen(y);
 	}
+	
 	public void addRandoms(){
 		for(int i = 0; i < 12; i++){
 			int randomSpotX = (int )(Math.random() * 9 + 1);
@@ -42,6 +43,7 @@ public class GameBoard {
 			}
 		}
 	}
+	
 	public void addRoll(int value, int x, int y){
 		System.out.println("Adding roll to (" + x + ", " + y + ")");
 		rows[y].addRoll(value, x);

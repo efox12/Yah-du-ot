@@ -13,7 +13,7 @@ public class YahDuOt {
 	private static Die myDie = new Die();
 	private static ScoreCard Player1 = new ScoreCard("Player 1");
 	private static ScoreCard Player2 = new ScoreCard("Player 2");
-	private static GameBoard board= new GameBoard();
+	private static GameBoard board = new GameBoard();
 	private static YahduotUX game; 
 	
 	public static void main(String[] args) {

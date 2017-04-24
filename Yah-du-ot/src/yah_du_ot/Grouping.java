@@ -126,4 +126,8 @@ public class Grouping {
 	public boolean isComplete() {
 		return counter == 9;
 	}
+	
+	public int[] getGroupingList(){
+		return groupingList;
+	}
 }
