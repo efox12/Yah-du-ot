@@ -1,5 +1,10 @@
+//import statements
 package yah_du_ot;
 
+/*
+ * @author Max McKee, Erik Fox, Will Fraisl
+ * Line.java
+ */
 public enum Line {
 	FullHouse, 
 	ThreeOK, 

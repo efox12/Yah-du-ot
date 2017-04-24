@@ -1,3 +1,4 @@
+//import statements
 package yah_du_ot;
 
 import java.awt.BasicStroke;
@@ -30,6 +31,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
+/*
+ * @author Max McKee, Erik Fox, Will Fraisl
+ * YahduotUX.java
+ */
 @SuppressWarnings("serial")
 public class YahduotUX extends JFrame {
 	
@@ -58,6 +63,16 @@ public class YahduotUX extends JFrame {
 	private ArrayList<Color> lineColors = new ArrayList<Color>();
 	private ArrayList<Line2D.Double> straightLines = new ArrayList<Line2D.Double>();	
 	
+	/*
+	 * YahduotUX constructor
+	 * <p>
+	 * Creates the main User Experience of the game.
+	 * 
+	 * @param thisdie die to use
+	 * @param Player1 the ScoreCard for first player
+	 * @param Player2 the ScoreCard for the second player
+	 * @param board the GameBoard to hold the groupings
+	 */
 	public YahduotUX(Die thisDie, ScoreCard Player1, ScoreCard Player2, GameBoard board) {
 		
 		this.setTitle("Yah-du-ot");		
@@ -155,12 +170,6 @@ public class YahduotUX extends JFrame {
 		add(leftSide, BorderLayout.LINE_START);
 		middleBox.add(createButtonMap());
 		add(middleBox, BorderLayout.CENTER);
-		
-		/*
-		Menu mainMenu = new Menu();
-    	mainMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    	mainMenu.setVisible(true);
-    	*/
     	
     	this.setVisible(true);
     	myDrawing = new Drawing();
@@ -170,15 +179,28 @@ public class YahduotUX extends JFrame {
     	togglePlayspace();
 	}	
 	
+	/*
+	 * Displays the ScoreCard for a given player
+	 * 
+	 * @param player the player to display the ScoreCard of
+	 */
 	private void displayScore(ScoreCard player) {
 		JFrame card = player.displayCard();
 		card.setVisible(true);
 	}
 
+	/*
+	 * Updates the image of the die button
+	 */
 	private void updateDieButton() {
 		myDie.setIcon(new ImageIcon(getDieImage().getImage().getScaledInstance(GAME_WIDTH / 8, GAME_WIDTH / 8, Image.SCALE_DEFAULT)));
 	}
 
+	/*
+	 * Creates the column labels for the board
+	 * 
+	 * @return the container with column labels
+	 */
 	private Container createColumnLabels() {
 		Container columns = new Container();
 		columns.setLayout(new GridLayout(1, 9));
@@ -201,6 +223,11 @@ public class YahduotUX extends JFrame {
 		return columns;
 	}
 	
+	/*
+	 * Creates the row labels for the board
+	 * 
+	 * @return the container with row labels
+	 */
 	private Container createRowLabels() {
 		Container rows = new Container();
 		rows.setLayout(new GridLayout(9, 1));
@@ -223,6 +250,11 @@ public class YahduotUX extends JFrame {
 		return rows;
 	}
 	
+	/*
+	 * Creates the grid that the buttons are in
+	 * 
+	 * @return the panel that the grid is in
+	 */
 	private JPanel createButtonMap() {
 		int gridSize = GAME_HEIGHT - GAME_HEIGHT / 6;
 		JPanel buttons = new JPanel();
@@ -251,6 +283,12 @@ public class YahduotUX extends JFrame {
 		return buttons;
 	}
 	
+	/*
+	 * Creates the space for the die to be rolled
+	 * 
+	 * @param thisDie the die to be rolled
+	 * @return the container the the rollspace is in
+	 */
 	private Container createRoll(Die thisDie) {
 		rollSpace = new Container();
 		BoxLayout rollLayout = new BoxLayout(rollSpace, BoxLayout.PAGE_AXIS);
@@ -274,6 +312,9 @@ public class YahduotUX extends JFrame {
 		return rollSpace;
 	}
 	
+	/*
+	 * Toggles whether the playspace is active
+	 */
 	private void togglePlayspace()  {
 		for (int i = 0; i < 9; i++) {
 			for (int j = 0; j < 9; j++) {
@@ -284,6 +325,11 @@ public class YahduotUX extends JFrame {
 		}
 	}
 	
+	/*
+	 * Gets the correct image for the die value
+	 * 
+	 * @return the die image
+	 */
 	private ImageIcon getDieImage() {
 		ImageIcon diePic;
 		
@@ -307,6 +353,12 @@ public class YahduotUX extends JFrame {
 		return diePic;
 	}
 	
+	/*
+	 * Presents the scoring option for a given grouping
+	 * 
+	 * @param groups a list of the groups to be scored
+	 * @param types the types of scoring possible
+	 */
 	public void scoreGrouping(ArrayList<Grouping> groups, ArrayList<String> types) {
 		Grouping g = groups.get(0);
 		String type = types.get(0);
@@ -380,6 +432,12 @@ public class YahduotUX extends JFrame {
 		score.setVisible(true);
 	}
 	
+	/*
+	 * Adds a box to the playspace
+	 * 
+	 * @param x the x coordinate
+	 * @param y the y coordinate
+	 */
 	public void addBox(int x, int y) {
 		for (int i = x*3; i < x*3+3; i++) {
 			for (int j = y*3; j < y*3+3; j++){
@@ -392,6 +450,14 @@ public class YahduotUX extends JFrame {
 		}
 	}
 	
+	/*
+	 * Adds a line to a row or column that's full
+	 * 
+	 * @param x1 first x coordinate
+	 * @param y1 first y coordinate
+	 * @param x2 second x coordinate
+	 * @param y2 second y coordinate
+	 */
 	public void addLine(int x1, int y1, int x2, int y2) {
 		if (!playerTurn) {
 			lineColors.add(new Color(55, 130, 255));
@@ -410,6 +476,9 @@ public class YahduotUX extends JFrame {
 		getGlassPane().repaint();
 	}
 	
+	/*
+	 * Displays the gameover message if the game is over
+	 */
 	private void determineGameOver() {
 		if (board.isComplete()) {
 			myDie.setEnabled(false);

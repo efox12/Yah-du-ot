@@ -1,3 +1,4 @@
+//import statements
 package yah_du_ot;
 
 import java.awt.Color;
@@ -7,8 +8,10 @@ import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.plaf.ColorUIResource;
 
-
-
+/*
+ * @author Max McKee, Erik Fox, Will Fraisl
+ * YahDuOt.java
+ */
 public class YahDuOt {
 	private static Die myDie = new Die();
 	private static ScoreCard Player1 = new ScoreCard("Player 1");

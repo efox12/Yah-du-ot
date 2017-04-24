@@ -1,3 +1,4 @@
+//import statements
 package yah_du_ot;
 
 import java.awt.Dimension;
@@ -14,15 +15,36 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
+/*
+ * @author Max McKee, Erik Fox, Will Fraisl
+ * ScoreCard.java
+ */
 public class ScoreCard {
+	/*
+	 * Saves the total score for a player
+	 */
 	private int grandTotal;
+	/*
+	 * Saves each line score in a dictionary
+	 */
 	private Dictionary<Line, Integer> lineTallies;
+	/*
+	 * Saves the players name
+	 */
 	private String player;
 	final Toolkit kit = Toolkit.getDefaultToolkit();
 	final int GAME_HEIGHT = (int) (0.75 * kit.getScreenSize().height);
 	final int GAME_WIDTH = GAME_HEIGHT / 17 + GAME_HEIGHT / 3 + GAME_HEIGHT;
 	Font BOARD_FONT = new Font(Font.SANS_SERIF, Font.BOLD, (int) (GAME_WIDTH / 50));
 	
+	/*
+	 * ScoreCard constructor
+	 * <p>
+	 * Creates a ScoreCard object given a players name. Fills the line scores dictionary,
+	 * and initializes variables.
+	 * 
+	 * @param playerName the name of the player
+	 */
 	public ScoreCard(String playerName){
 		grandTotal = 0;
 		player = playerName;
@@ -40,10 +62,23 @@ public class ScoreCard {
 		lineTallies.put(Line.FStraight, 0);
 	}
 	
+	/*
+	 * Adds line tallies to the dictionary
+	 * <p>
+	 * Takes the number of tallies to add, and the line to add it to and adds the tallies.
+	 * 
+	 * @param numberTallies how many tallies to add to the line
+	 * @param lineEnum the line to add the tallies to
+	 */
 	public void addTallies(int numberTallies, Line lineEnum){
 		lineTallies.put(lineEnum, lineTallies.get(lineEnum) + numberTallies);
 	}
 	
+	/*
+	 * Gets the total score for the player
+	 * 
+	 * @return the grand total
+	 */
 	public int getTotal() {
 		grandTotal = lineTallies.get(Line.FullHouse)*70 +
 				lineTallies.get(Line.ThreeOK)*10 +
@@ -60,7 +95,13 @@ public class ScoreCard {
 	}
 	
 
-	
+	/*
+	 * Creates the JFrame and display the ScoreCard
+	 * <p>
+	 * Put the score lines into a chart and displays them in a new frame.
+	 * 
+	 * @return the JFrame that the ScoreCard is shown on
+	 */
 	public JFrame displayCard(){
 		getTotal();
 		JPanel scoreCard = new JPanel();
