@@ -60,10 +60,7 @@ public class YahduotUX extends JFrame {
 	
 	public YahduotUX(Die thisDie, ScoreCard Player1, ScoreCard Player2, GameBoard board) {
 		
-		this.setTitle("Yah-du-ot");
-		
-		//setSize(1000,600);
-		
+		this.setTitle("Yah-du-ot");		
 		this.setResizable(false);
 		this.setSize(new Dimension(GAME_WIDTH, GAME_HEIGHT));
 		this.setLocation(GAME_WIDTH / 6, GAME_HEIGHT / 6);
@@ -122,7 +119,6 @@ public class YahduotUX extends JFrame {
 		leftSide.setPreferredSize(new Dimension(GAME_WIDTH/23,390));
 		leftSide.setMinimumSize(new Dimension(GAME_WIDTH/23,390));
 		leftSide.setMaximumSize(new Dimension(GAME_WIDTH/23,390));
-		//GAME_HEIGHT - GAME_HEIGHT / 10, GAME_HEIGHT - GAME_HEIGHT / 10 + GAME_WIDTH/22
 		JPanel middleBox = new JPanel();
 		middleBox.setLayout(new BoxLayout(middleBox, BoxLayout.Y_AXIS));
 		middleBox.setBackground(Color.decode("#94AACE"));
@@ -141,7 +137,6 @@ public class YahduotUX extends JFrame {
 		rightSide.add(Players);
 		rightSide.add(Box.createRigidArea(new Dimension(0,GAME_HEIGHT / 25)));
 		rightSide.add(rightSide1);
-		//rightSide.add(Box.createRigidArea(new Dimension(0,GAME_HEIGHT / 10)));
 		rightSide.add(rightSide2);
 		rightSide1.add(P1);
 
@@ -150,9 +145,7 @@ public class YahduotUX extends JFrame {
 		rightSide2.add(P2);
 		
 		rightSide2.add(P2Score);
-		
-		//rightSide.add(P1Score);
-		
+				
 		rightSide.add(createRoll(thisDie));
 
 		add(rightSide, BorderLayout.LINE_END);
@@ -162,6 +155,7 @@ public class YahduotUX extends JFrame {
 		add(leftSide, BorderLayout.LINE_START);
 		middleBox.add(createButtonMap());
 		add(middleBox, BorderLayout.CENTER);
+		
 		/*
 		Menu mainMenu = new Menu();
     	mainMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -236,7 +230,6 @@ public class YahduotUX extends JFrame {
 		buttons.setPreferredSize(new Dimension(gridSize,gridSize));
 		buttons.setMinimumSize(new Dimension(gridSize,gridSize));
 		buttons.setMaximumSize(new Dimension(gridSize,gridSize));
-		//buttons.setBackground(Color.BLUE);
 		
 		for (int i = 0; i < 9; i++) {
 			for (int j = 0; j < 9; j++) {
@@ -266,7 +259,6 @@ public class YahduotUX extends JFrame {
 		turn = new JLabel("Player 1 roll die");
 		turn.setFont(BOARD_FONT);
 		turn.setAlignmentX(CENTER_ALIGNMENT);
-		//rollSpace.add(Box.createRigidArea(new Dimension(0, 50)));
 		rollSpace.add(turn);
 		rollSpace.add(Box.createRigidArea(new Dimension(0, GAME_HEIGHT / 15)));
 		updateDieButton();
@@ -447,7 +439,6 @@ public class YahduotUX extends JFrame {
 	class Drawing extends JPanel {
 		
 		public Drawing() {
-			//this.setBounds(0, 0, GAME_WIDTH, GAME_HEIGHT);
 			this.setPreferredSize(super.getPreferredSize());
 		}
 		
@@ -457,7 +448,6 @@ public class YahduotUX extends JFrame {
 			Rectangle2D horizontal = new Rectangle2D.Double(BOX_INSET_X, BOX_INSET_Y + (BOX_HEIGHT / 3), BOX_WIDTH, BOX_HEIGHT / 3);
 			Rectangle2D vertical = new Rectangle2D.Double(BOX_INSET_X + (BOX_WIDTH / 3), BOX_INSET_Y, BOX_WIDTH / 3, BOX_HEIGHT);
 			g2.setStroke(new BasicStroke(5));
-			//g2.fillRect(10, 10, 100, 100);
 			g2.draw(box);
 			g2.draw(horizontal);
 			g2.draw(vertical);

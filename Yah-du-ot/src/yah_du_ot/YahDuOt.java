@@ -33,9 +33,7 @@ public class YahDuOt {
         	UIManager.put("InternalFrame.titleFont", new Font("Dialog", Font.BOLD, 11));
         	game = new YahduotUX(myDie, Player1, Player2, board);
         	board.addUX(game);
-        	game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        	//JOptionPane.showMessageDialog(game, "Player 1 roll for turn");
-        	
+        	game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);        	
         });
   }
 }
