@@ -3,10 +3,13 @@ package yah_du_ot;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+<<<<<<< HEAD
 /*
  * @author Max McKee, Erik Fox, Will Fraisl
  * Grouping.java
  */
+=======
+>>>>>>> branch 'master' of https://github.com/willfraisl/Yah-du-ot.git
 public class Grouping {
 	/*
 	 * A list of the numbers in the grouping.
