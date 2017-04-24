@@ -3,13 +3,11 @@ package yah_du_ot;
 
 import java.util.ArrayList;
 
-<<<<<<< HEAD
 /*
  * @author Max McKee, Erik Fox, Will Fraisl
  * Gameboard.java
  */
-=======
->>>>>>> branch 'master' of https://github.com/willfraisl/Yah-du-ot.git
+
 public class GameBoard {
 	/*
 	 * A list of grouping objects that are the rows of the board
