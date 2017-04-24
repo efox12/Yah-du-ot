@@ -54,6 +54,7 @@ public class GameBoard {
 			System.out.println("Row " + y + " complete");
 			groups.add(rows[y]);
 			types.add("Row " + (y+1));
+			UX.addLine(0, y, 8, y);
 			scorable = true;
 		}
 		
@@ -61,6 +62,7 @@ public class GameBoard {
 			System.out.println("Column " + (char)(x+65) + " complete");
 			groups.add(columns[x]);
 			types.add("Column " + (char)(x+65));
+			UX.addLine(x, 0, x, 8);
 			scorable = true;
 		}
 		
@@ -68,6 +70,7 @@ public class GameBoard {
 			System.out.println("Cluster " + ((x/3) + (y/3) * 3) + " complete");
 			groups.add((clusters[(x/3) + (y/3) * 3])); 
 			types.add("Cluster (" + (x/3 + 1) + ", "  + (3 - (y/3)) + ")");
+			UX.addBox(x/3, y/3);
 			scorable = true;
 		}
 		
