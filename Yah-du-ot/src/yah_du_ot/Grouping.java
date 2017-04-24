@@ -53,7 +53,7 @@ public class Grouping {
 		Arrays.sort(groupingList);
 		int maxLength = 1;
 		int currentLength = 1;
-		for(int i=0; i<9; i++){
+		for(int i=0; i<8; i++){
 			if(groupingList[i] + 1 == groupingList[i + 1])
 	            currentLength++;
 	        else if(groupingList[i] + 1 < groupingList[i + 1])
@@ -61,6 +61,7 @@ public class Grouping {
 	        if(currentLength > maxLength)
 	            maxLength = currentLength;
 		}
+		System.out.println("Max straight: " + maxLength);
 		return maxLength;
 	}
 	
@@ -85,11 +86,12 @@ public class Grouping {
 			if(maxOfAKindFound(i) == 9)
 				possibleValues.add(Line.NineOK);
 		}
-		if(maxStraightFound() == 6)
+		
+		if(maxStraightFound() == 4)
 			possibleValues.add(Line.SStraight);
 		else if(maxStraightFound() == 5)
 			possibleValues.add(Line.LStraight);
-		else if(maxStraightFound() == 4)
+		else if(maxStraightFound() == 6)
 			possibleValues.add(Line.FStraight);
 			
 		return possibleValues;

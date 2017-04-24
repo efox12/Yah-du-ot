@@ -4,12 +4,17 @@ public class GameBoard {
 	private Grouping[] rows;
 	private Grouping[] columns;
 	private Grouping[] clusters;
+	private YahduotUX UX;
 	
 	public GameBoard() {
 		rows = new Grouping[9];
 		columns = new Grouping[9];
 		clusters = new Grouping[9];
 		initializeGroupings();
+	}
+	
+	public void addUX(YahduotUX UX) {
+		this.UX = UX;
 	}
 	
 	public void initializeGroupings() {
@@ -41,21 +46,32 @@ public class GameBoard {
 		
 		if (rows[y].isComplete()) {
 			System.out.println("Row " + y + " complete");
-			scoreGrouping(rows[y]);
+			UX.scoreGrouping(rows[y], "Row " + (y+1));
 		}
 		
 		if (columns[x].isComplete()) {
 			System.out.println("Column " + x + " complete");
-			scoreGrouping(columns[x]);
+			UX.scoreGrouping(columns[x], "Column " + (x+1));
 		}
 		
 		if (clusters[(x/3) + (y/3) * 3].isComplete()) {
 			System.out.println("Cluster " + ((x/3) + (y/3) * 3) + " complete");
-			scoreGrouping(clusters[(x/3) + (y/3) * 3]);
+			UX.scoreGrouping(clusters[(x/3) + (y/3) * 3], 
+							 "Cluster (" + (x/3 + 1) + ", "  + (3 - (y/3) * 3) + ")");
+	
 		}
 	}
 	
-	public void scoreGrouping(Grouping toScore) {
-		System.out.println("Scoring");
+	public boolean isComplete() {
+		for (int i = 0; i < 9; i++) {
+			if (!(rows[i].isComplete() 
+				&& columns[i].isComplete() 
+				&& clusters[i].isComplete())) {
+				return false;
+			} 
+		}
+		
+		return true;
 	}
+
 }
