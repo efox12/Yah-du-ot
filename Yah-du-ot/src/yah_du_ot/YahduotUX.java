@@ -34,6 +34,7 @@ import javax.swing.UIManager;
 import javax.swing.border.Border;
 import javax.swing.JRadioButton;
 
+@SuppressWarnings("serial")
 public class YahduotUX extends JFrame {
 	
 	private static Toolkit kit = Toolkit.getDefaultToolkit();
@@ -85,6 +86,7 @@ public class YahduotUX extends JFrame {
 		Players.setAlignmentX(CENTER_ALIGNMENT);
 		Players.setFont(BOARD_FONT);
 		JLabel P1 = new JLabel("Player 1: 0   ");
+		
 		P1 = new JLabel("Player 1: 0");
 		P1.setFont(BOARD_FONT);
 		

@@ -11,7 +11,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
@@ -136,6 +135,7 @@ public class ScoreCard {
 		return scoreFrame;
 	}
 	
+	@SuppressWarnings("serial")
 	class ScoreCardFrame extends JFrame{
 		public ScoreCardFrame(JPanel table){
 			setSize(new Dimension(GAME_WIDTH / 3 + GAME_WIDTH / 5, GAME_HEIGHT/2 + GAME_HEIGHT/3 + GAME_HEIGHT/20));
