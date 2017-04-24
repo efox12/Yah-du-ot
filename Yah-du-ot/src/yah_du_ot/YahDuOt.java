@@ -26,7 +26,6 @@ public class YahDuOt {
     	        UIManager.setLookAndFeel( UIManager.getCrossPlatformLookAndFeelClassName() );
     		} 
     		catch (Exception e) {
-    			// TODO Auto-generated catch block
     			e.printStackTrace();
     		}
         	UIManager.put("InternalFrame.activeTitleBackground", new ColorUIResource(Color.BLUE));

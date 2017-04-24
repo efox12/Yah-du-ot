@@ -21,17 +21,12 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
-import javax.swing.ButtonModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRootPane;
-import javax.swing.SwingConstants;
-import javax.swing.UIManager;
-import javax.swing.border.Border;
 import javax.swing.JRadioButton;
 
 @SuppressWarnings("serial")
@@ -47,10 +42,10 @@ public class YahduotUX extends JFrame {
 	
 	private final Font BOARD_FONT = new Font(Font.SANS_SERIF, Font.BOLD, (int) (GAME_WIDTH / 35));
 	private static Drawing myDrawing;
-	private boolean turn;
-	private boolean pressed;
+	private boolean playerTurn; //True for player 1, false for player 2
 	private JLabel P1;
 	private JLabel P2;
+	private JLabel turn;
 	private Container rollSpace;
 	private Die gameDie;
 	private JButton myDie = new JButton();
@@ -73,12 +68,15 @@ public class YahduotUX extends JFrame {
 		this.player1 = Player1;
 		this.player2 = Player2;
 		this.board = board;
-		turn = true;
+		playerTurn = true;
 		setLayout(new BorderLayout());
 		gameDie = thisDie;
 		myDie.addActionListener(event -> updateDieButton());
 		myDie.addActionListener(event -> revalidate());
 		myDie.addActionListener(event -> gameDie.roll());
+		myDie.addActionListener(event -> myDie.setEnabled(false));
+		myDie.addActionListener(event -> turn.setText("Player " + (playerTurn ? 1 : 2) + " place die"));
+		myDie.addActionListener(event -> togglePlayspace());
 		
 		getContentPane().setLayout(new BorderLayout());
 		getContentPane().setBackground(Color.decode("#CEE3F6"));
@@ -151,7 +149,7 @@ public class YahduotUX extends JFrame {
 		//rightSide.add(P1Score);
 		
 		rightSide.add(createRoll(thisDie));
-		
+
 		add(rightSide, BorderLayout.LINE_END);
 		middleBox.add(createColumnLabels());
 		leftSide.add(Box.createRigidArea(new Dimension(0,GAME_HEIGHT / 25)));
@@ -170,6 +168,7 @@ public class YahduotUX extends JFrame {
     	setGlassPane(myDrawing);
     	myDrawing.setOpaque(false);
     	myDrawing.setVisible(true);
+    	togglePlayspace();
 	}	
 	
 	private void displayScore(ScoreCard player) {
@@ -246,8 +245,6 @@ public class YahduotUX extends JFrame {
 				buttonBox[i][j].setForeground(Color.BLACK);
 				buttonBox[i][j].addActionListener(event ->
 													System.out.println(label + " pressed"));
-				buttonBox[i][j].addActionListener(event ->
-													setButtonText(event));
 				buttonBox[i][j].addActionListener(buttonBox[i][j]);
 				buttons.add(buttonBox[i][j]);
 			}
@@ -256,18 +253,12 @@ public class YahduotUX extends JFrame {
 		return buttons;
 	}
 	
-	private void setButtonText(ActionEvent e) {
-		((YButton) e.getSource()).setText(Integer.toString(gameDie.getLastRoll()));
-		((YButton) e.getSource()).setEnabled(false);
-	}
-	
 	private Container createRoll(Die thisDie) {
 		rollSpace = new Container();
 		BoxLayout rollLayout = new BoxLayout(rollSpace, BoxLayout.PAGE_AXIS);
 		rollSpace.setLayout(rollLayout);
 		
-		
-		JLabel turn = new JLabel("First turn not decided");
+		turn = new JLabel("Player 1 roll die");
 		turn.setFont(BOARD_FONT);
 		turn.setAlignmentX(CENTER_ALIGNMENT);
 		//rollSpace.add(Box.createRigidArea(new Dimension(0, 50)));
@@ -285,7 +276,16 @@ public class YahduotUX extends JFrame {
 		revalidate();
 		return rollSpace;
 	}
-
+	
+	private void togglePlayspace()  {
+		for (int i = 0; i < 9; i++) {
+			for (int j = 0; j < 9; j++) {
+				if (!buttonBox[i][j].isSet()) {
+					buttonBox[i][j].setEnabled(!buttonBox[i][j].isEnabled());
+				}
+			}
+		}
+	}
 	
 	private ImageIcon getDieImage() {
 		ImageIcon diePic;
@@ -321,7 +321,7 @@ public class YahduotUX extends JFrame {
 
 		JLabel header = new JLabel();
 		header.setFont(BOARD_FONT);
-		header.setText("Player " + (!turn ? 1 : 2) + ": " + type); 
+		header.setText("Player " + (playerTurn ? 1 : 2) + ": " + type); 
 		scoringOptions.add(header);
 		for (int i = 0; i < options.size(); i++) {
 			Line l = options.get(i);
@@ -347,8 +347,9 @@ public class YahduotUX extends JFrame {
 		confirm.addActionListener(event -> setEnabled(true));
 		confirm.addActionListener(event -> score.setVisible(false));
 		confirm.addActionListener(event -> score.dispose());
+		confirm.addActionListener(event -> playerTurn = !playerTurn);
 		confirm.addActionListener(event -> 
-									{if (turn) {
+									{if (playerTurn) {
 										player1.addTallies(1, selectedLine);
 										P1.setText("Player 1: " + player1.getTotal());
 									} else {
@@ -458,10 +459,15 @@ public class YahduotUX extends JFrame {
 	class YButton extends JButton implements ActionListener{
 		private int x;
 		private int y;
+		private boolean set;
 		
 		public YButton(int x, int y) {
 			this.x = x;
 			this.y = y;
+		}
+		
+		public boolean isSet() {
+			return set;
 		}
 		
 		public int getXCoord() {
@@ -474,6 +480,12 @@ public class YahduotUX extends JFrame {
 		
 		public void actionPerformed(ActionEvent e) {
 			board.addRoll(gameDie.getLastRoll(), this.x, this.y);
+			this.set = true;
+			this.setEnabled(false);
+			this.setText(Integer.toString(gameDie.getLastRoll()));
+			turn.setText("Player " + (playerTurn ? 1 : 2) + " roll die");
+			togglePlayspace();
+			myDie.setEnabled(true);
 		}
 		
 	}
