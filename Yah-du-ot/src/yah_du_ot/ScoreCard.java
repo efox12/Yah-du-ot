@@ -45,10 +45,25 @@ public class ScoreCard {
 		lineTallies.put(lineEnum, numberOfTallies);
 	}
 	
+	public int getTotal() {
+		grandTotal = lineTallies.get(Line.FullHouse)*25 +
+				lineTallies.get(Line.ThreeOK)*10 +
+				lineTallies.get(Line.FourOK)*20 +
+				lineTallies.get(Line.FiveOK)*30 +
+				lineTallies.get(Line.SixOK)*40 +
+				lineTallies.get(Line.SevenOK)*50 +
+				lineTallies.get(Line.EightOK)*60 +
+				lineTallies.get(Line.NineOK)*100 +
+				lineTallies.get(Line.SStraight)*20 +
+				lineTallies.get(Line.LStraight)*30 +
+				lineTallies.get(Line.FStraight)*40;
+		return grandTotal;
+	}
+	
 
 	
 	public JFrame displayCard(){
-		
+		getTotal();
 		JPanel scoreCard = new JPanel();
 		
 		JPanel scoreTable = new JPanel();
