@@ -2,16 +2,18 @@ package yah_du_ot;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import org.junit.Test;
+
 
 public class Grouping {
 	int[] groupingList;
 	boolean scored;
 	private int counter;
 	
-	public Grouping(){	
-		scored = false;
-		counter = 0;
-	}
+	//public Grouping(){	
+	//	scored = false;
+	//	counter = 0;
+	//}
 	
 	public Grouping(int listSize) {
 		groupingList = new int[listSize];

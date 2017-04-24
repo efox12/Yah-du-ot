@@ -2,6 +2,8 @@ package yah_du_ot;
 
 import java.util.ArrayList;
 
+import org.junit.Test;
+
 public class GameBoard {
 	private Grouping[] rows;
 	private Grouping[] columns;
