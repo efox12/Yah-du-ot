@@ -45,7 +45,7 @@ public class ScoreCard {
 	}
 	
 	public int getTotal() {
-		grandTotal = lineTallies.get(Line.FullHouse)*25 +
+		grandTotal = lineTallies.get(Line.FullHouse)*70 +
 				lineTallies.get(Line.ThreeOK)*10 +
 				lineTallies.get(Line.FourOK)*20 +
 				lineTallies.get(Line.FiveOK)*30 +
@@ -85,12 +85,9 @@ public class ScoreCard {
 		score.setLayout(new BoxLayout(score, BoxLayout.Y_AXIS));
 		scoreTable.add(score);
 		
-		type.add(new JLabel("Type"));
-		type.add(new JLabel("Full House"));
-
 		Object[][] tableData = {
-				{"Type", "Points worth", "Times Scored", "Score"},
-				{"Full House","25 Points", lineTallies.get(Line.FullHouse), lineTallies.get(Line.FullHouse)*25},
+				{"Type", "Value", "Times", "Score"},
+				{"Full House","70 Points", lineTallies.get(Line.FullHouse), lineTallies.get(Line.FullHouse)*25},
 				{"3 of a Kind", "10 Points", lineTallies.get(Line.ThreeOK), lineTallies.get(Line.ThreeOK)*10},
 				{"4 of a Kind", "20 Points", lineTallies.get(Line.FourOK), lineTallies.get(Line.FourOK)*20},
 				{"5 of a Kind", "30 Points", lineTallies.get(Line.FiveOK), lineTallies.get(Line.FiveOK)*30},
