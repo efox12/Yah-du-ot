@@ -321,7 +321,7 @@ public class YahduotUX extends JFrame {
 
 		JLabel header = new JLabel();
 		header.setFont(BOARD_FONT);
-		header.setText("Player " + (playerTurn ? 1 : 2) + ": " + type); 
+		header.setText("Player " + (!playerTurn ? 1 : 2) + ": " + type); 
 		scoringOptions.add(header);
 		for (int i = 0; i < options.size(); i++) {
 			Line l = options.get(i);
@@ -347,9 +347,8 @@ public class YahduotUX extends JFrame {
 		confirm.addActionListener(event -> setEnabled(true));
 		confirm.addActionListener(event -> score.setVisible(false));
 		confirm.addActionListener(event -> score.dispose());
-		confirm.addActionListener(event -> playerTurn = !playerTurn);
 		confirm.addActionListener(event -> 
-									{if (playerTurn) {
+									{if (!playerTurn) {
 										player1.addTallies(1, selectedLine);
 										P1.setText("Player 1: " + player1.getTotal());
 									} else {
@@ -479,10 +478,11 @@ public class YahduotUX extends JFrame {
 		}
 		
 		public void actionPerformed(ActionEvent e) {
-			board.addRoll(gameDie.getLastRoll(), this.x, this.y);
 			this.set = true;
 			this.setEnabled(false);
 			this.setText(Integer.toString(gameDie.getLastRoll()));
+			playerTurn = !playerTurn;
+			board.addRoll(gameDie.getLastRoll(), this.x, this.y);
 			turn.setText("Player " + (playerTurn ? 1 : 2) + " roll die");
 			togglePlayspace();
 			myDie.setEnabled(true);

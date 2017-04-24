@@ -67,7 +67,7 @@ public class GameBoard {
 		if (clusters[(x/3) + (y/3) * 3].isComplete()) {
 			System.out.println("Cluster " + ((x/3) + (y/3) * 3) + " complete");
 			groups.add((clusters[(x/3) + (y/3) * 3])); 
-			types.add("Cluster (" + (x/3 + 1) + ", "  + (3 - (y/3) * 3) + ")");
+			types.add("Cluster (" + (x/3) + ", "  + (3 - (y/3)) + ")");
 			scorable = true;
 		}
 		

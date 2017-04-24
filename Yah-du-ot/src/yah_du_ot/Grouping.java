@@ -19,23 +19,39 @@ public class Grouping {
 		counter = 0;
 	}
 	
-	public int maxOfAKindFound(int value){
+	public int maxOfAKindFound(){
+		int valueOfAKind = 0;
+		int temp = 0;
+		for (int i = 1; i <= 6; i++){
+			temp = 0;
+			for(int j = 0; j < 9; j++){
+				if(groupingList[j] == i){
+					temp++;
+				}
+			}
+			valueOfAKind = Math.max(valueOfAKind, temp);
+		}
+		return valueOfAKind;
+	}
+	
+	public int maxOfAKindFound(int value) {
 		int valueOfAKind = 0;
 		for(int i = 0; i < 9; i++){
 			if(groupingList[i] == value){
 				valueOfAKind++;
 			}
 		}
+
 		return valueOfAKind;
 	}
 	
 	public boolean isFullHouse(){
 		boolean fourOfAKind = false;
-		boolean fiveOfAKind = true;
-		for(int i = 1; i<=6; i++){
+		boolean fiveOfAKind = false;
+		for(int i = 1; i<= 6; i++){
 			if(maxOfAKindFound(i) == 4)
 				fourOfAKind = true;
-			if(maxOfAKindFound(i) == 4)
+			if(maxOfAKindFound(i) == 5)
 				fiveOfAKind = true;
 		}
 		if(fourOfAKind && fiveOfAKind)
@@ -65,23 +81,20 @@ public class Grouping {
 		scored = true;
 		if(isFullHouse())
 			possibleValues.add(Line.FullHouse);
-		for(int i = 1; i<=6; i++){
-			if(maxOfAKindFound(i) == 3)
-				possibleValues.add(Line.ThreeOK);
-			if(maxOfAKindFound(i) == 4)
-				possibleValues.add(Line.FourOK);
-			if(maxOfAKindFound(i) == 5)
-				possibleValues.add(Line.FiveOK);
-			if(maxOfAKindFound(i) == 6)
-				possibleValues.add(Line.SixOK);
-			if(maxOfAKindFound(i) == 7)
-				possibleValues.add(Line.SevenOK);
-			if(maxOfAKindFound(i) == 8)
-				possibleValues.add(Line.EightOK);
-			if(maxOfAKindFound(i) == 9)
-				possibleValues.add(Line.NineOK);
-		}
-		
+		if(maxOfAKindFound() == 3)
+			possibleValues.add(Line.ThreeOK);
+		if(maxOfAKindFound() == 4)
+			possibleValues.add(Line.FourOK);
+		if(maxOfAKindFound() == 5)
+			possibleValues.add(Line.FiveOK);
+		if(maxOfAKindFound() == 6)
+			possibleValues.add(Line.SixOK);
+		if(maxOfAKindFound() == 7)
+			possibleValues.add(Line.SevenOK);
+		if(maxOfAKindFound() == 8)
+			possibleValues.add(Line.EightOK);
+		if(maxOfAKindFound() == 9)
+			possibleValues.add(Line.NineOK);		
 		if(maxStraightFound() == 4)
 			possibleValues.add(Line.SStraight);
 		else if(maxStraightFound() == 5)

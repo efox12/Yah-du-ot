@@ -24,7 +24,7 @@ public enum Line {
 		case FourOK:
 			return "Four of a Kind (20 points)";
 		case FullHouse:
-			return "Full House (25 points)";
+			return "Full House (70 points)";
 		case LStraight:
 			return "Large Straight (30 points)";
 		case NineOK:
