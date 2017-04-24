@@ -4,45 +4,22 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class GameBoardTest {
-
+public class GameBoardTest {	
 	@Test
 	public void test() {
 		GameBoard tester = new GameBoard();
-		//assertEquals(true, tester.spaceOpen(0,0));
-		for(int i = 0; i < 8; i++){
-			tester.addRoll(2, i, 0);
-		}
-		//tester.addRoll(2, 8, 0);
+		assertEquals(false, tester.isComplete());
 		
-		//for(int i = 0; i < 8; i++){
-		//	tester.addRoll(2, i, 1);
-		//}
-		for(int i = 0; i < 8; i++){
-			tester.addRoll(2, i, 2);
-		}
-		/*
-		for(int i = 0; i < 8; i++){
-			tester.addRoll(2, i, 3);
-		}
-		for(int i = 0; i < 8; i++){
-			tester.addRoll(2, i, 4);
-		}
-		for(int i = 0; i < 8; i++){
-			tester.addRoll(2, i, 5);
-		}
-		for(int i = 0; i < 8; i++){
-			tester.addRoll(2, i, 6);
-		}
-		for(int i = 0; i < 8; i++){
-			tester.addRoll(2, i, 7);
-		}
-		for(int i = 0; i < 8; i++){
-			tester.addRoll(2, i, 8);
-		}
-		*/
-		//assertEquals(true, tester.isComplete());
-		//Arrays.asList("Customer1", "Customer2", "Customer3"), myArray());
+		tester.addRoll(2, 0, 0);
+		tester.addRoll(2, 0, 1);
+		tester.addRoll(2, 0, 2);
+		tester.addRoll(2, 0, 3);
+		tester.addRoll(2, 0, 4);
+		tester.addRoll(2, 0, 5);
+		tester.addRoll(2, 0, 6);
+		tester.addRoll(4, 0, 7);
+		
+		assertEquals(false, tester.spaceOpen(0, 0));
+		assertEquals(true, tester.spaceOpen(8, 8));
 	}
-
 }
