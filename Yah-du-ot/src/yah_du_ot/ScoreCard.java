@@ -36,7 +36,7 @@ public class ScoreCard {
 		lineTallies.put(lineEnum, numberOfTallies);
 	}
 	
-	public JFrame displayCard(){
+	public int getTotal() {
 		grandTotal = lineTallies.get(Line.FullHouse)*25 +
 				lineTallies.get(Line.ThreeOK)*10 +
 				lineTallies.get(Line.FourOK)*20 +
@@ -48,6 +48,11 @@ public class ScoreCard {
 				lineTallies.get(Line.SStraight)*20 +
 				lineTallies.get(Line.LStraight)*30 +
 				lineTallies.get(Line.FStraight)*40;
+		return grandTotal;
+	}
+	
+	public JFrame displayCard(){
+		getTotal();
 		Object[][] tableData = {
 				{"Type", "Points worth", "Times Scored", "Score"},
 				{"Full House","25 Points", lineTallies.get(Line.FullHouse), lineTallies.get(Line.FullHouse)*25},

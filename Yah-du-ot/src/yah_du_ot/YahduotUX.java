@@ -9,30 +9,26 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 
-import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.Icon;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-import javax.swing.UIManager;
+import javax.swing.JRadioButton;
 
+@SuppressWarnings("serial")
 public class YahduotUX extends JFrame {
 	
 	private static Toolkit kit = Toolkit.getDefaultToolkit();
@@ -45,6 +41,9 @@ public class YahduotUX extends JFrame {
 	
 	private final Font BOARD_FONT = new Font(Font.SANS_SERIF, Font.BOLD, (int) (GAME_WIDTH / 50));
 	private static Drawing myDrawing;
+	private boolean turn;
+	private JLabel P1;
+	private JLabel P2;
 	private Container rollSpace;
 	private Die gameDie;
 	private JButton myDie = new JButton();
@@ -52,6 +51,7 @@ public class YahduotUX extends JFrame {
 	private ScoreCard player2;
 	private GameBoard board;
 	private YButton [][] buttonBox = new YButton[9][9];
+	private Line selectedLine;
 	
 	public YahduotUX(Die thisDie, ScoreCard Player1, ScoreCard Player2, GameBoard board) {
 		
@@ -65,6 +65,7 @@ public class YahduotUX extends JFrame {
 		this.player1 = Player1;
 		this.player2 = Player2;
 		this.board = board;
+		turn = true;
 		setLayout(new BorderLayout());
 		gameDie = thisDie;
 		myDie.addActionListener(event -> updateDieButton());
@@ -77,10 +78,10 @@ public class YahduotUX extends JFrame {
 		Players.setAlignmentX(CENTER_ALIGNMENT);
 		Players.setFont(BOARD_FONT);
 		
-		JLabel P1 = new JLabel("Player 1: 0");
+		P1 = new JLabel("Player 1: 0");
 		P1.setFont(BOARD_FONT);
 		
-		JLabel P2 = new JLabel("Player 2: 0");
+		P2 = new JLabel("Player 2: 0");
 		P2.setFont(BOARD_FONT);
 		
 		JButton P1Score = new JButton("Score Card");
@@ -100,9 +101,6 @@ public class YahduotUX extends JFrame {
 		P2Score.setMinimumSize(new Dimension(GAME_WIDTH/6,50));
 		P2Score.setMaximumSize(new Dimension(GAME_WIDTH/6,50));
 		P2Score.addActionListener(event -> displayScore(player2));
-		//createRoll(thisDie);
-		JButton filler = new JButton("Filler");
-		//filler.setFont(BOARD_FONT);
 		
 		JPanel leftSide = new JPanel();
 		leftSide.setLayout(new BoxLayout(leftSide, BoxLayout.Y_AXIS));
@@ -297,6 +295,43 @@ public class YahduotUX extends JFrame {
 		}
 		
 		return diePic;
+	}
+	
+	public void scoreGrouping(Grouping g) {
+		this.setEnabled(false);
+		JPanel scoringOptions = new JPanel(new GridLayout(0,1));
+		ButtonGroup group = new ButtonGroup();
+		JFrame score = new JFrame("Select a score");
+		ArrayList<Line> options = g.score();
+		for (int i = 0; i < options.size(); i++) {
+			Line l = options.get(i);
+			JRadioButton b = new JRadioButton(l.toString());
+			b.setFont(BOARD_FONT);
+			b.addActionListener(event -> selectedLine = l);
+			group.add(b);
+			scoringOptions.add(b);
+		}
+		
+		JButton confirm = new JButton("Confirm");
+		confirm.setFont(BOARD_FONT);
+		confirm.addActionListener(event -> setEnabled(true));
+		confirm.addActionListener(event -> score.setVisible(false));
+		confirm.addActionListener(event -> score.dispose());
+		confirm.addActionListener(event -> 
+									{if (turn) {
+										player1.addTallies(1, selectedLine);
+										P1.setText("Player 1: " + player1.getTotal());
+									} else {
+										player2.addTallies(1, selectedLine);
+										P2.setText("Player 2: " + player2.getTotal());}});
+		scoringOptions.add(confirm);
+		
+		score.setSize(new Dimension(GAME_WIDTH / 2, GAME_HEIGHT / 2));
+		score.setLocation(GAME_WIDTH / 3, GAME_HEIGHT / 3);
+
+		score.getContentPane().add(scoringOptions);
+		score.setVisible(true);
+		
 	}
 	
 	class Drawing extends JPanel {
